@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/narko4u/evidence-record-spec/main/evidence-record-0.1.schema.json",
+  "title": "Evidence Record",
+  "description": "A portable, evidence-grade record of an agent action, designed so an auditor can separate what was claimed from what was observed, at what vantage, and with what assurance. The schema is intentionally independent of any implementation: it describes the record, not the engine that produces it.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "Stable identifier for the record."
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Identifier for the agent instance that acted."
+    },
+    "actor_chain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The delegation chain: initiator -> agent -> sub-agent -> tool. Each entry is an identifier; the schema does not define how identifiers are resolved."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the action occurred, ISO 8601."
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": ["agent_self_report", "framework", "gateway_proxy", "identity_provider", "sandbox", "operating_system", "network_sensor", "security_sensor", "external_authority"],
+          "description": "Where the observation originated. Distinguishes agent self-reporting from boundary or external evidence, per the AAIF OT-WG source-and-trust requirement."
+        },
+        "relationship": {
+          "type": "string",
+          "enum": ["direct", "corroborating", "contradictory", "derived"],
+          "description": "What the observation claims about the action. Derived records must carry provenance referencing the records they were derived from."
+        },
+        "directness": {
+          "type": "string",
+          "enum": ["direct_observation", "inferred"],
+          "description": "Whether the record is a direct observation of the action or inferred from other telemetry."
+        }
+      },
+      "required": ["source", "relationship", "directness"]
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "vantage": {
+          "type": "string",
+          "enum": ["substrate", "artifact"],
+          "description": "Substrate = evidence the artifact cannot forge or suppress; artifact = evidence inside the artifact's write path. The weaker of declared and engine-reachable wins."
+        },
+        "method": {
+          "type": "string",
+          "enum": ["intercepted", "reconstructed"],
+          "description": "Intercepted = captured at the time of the action; reconstructed = established after the fact. Orthogonal to vantage."
+        },
+        "basis": {
+          "type": "string",
+          "pattern": "^(substrate|artifact)_(intercepted|reconstructed)$",
+          "description": "Derived basis, composed from vantage and method: {vantage}_{method}."
+        },
+        "basis_engines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The detection or evidence engines involved. Composition is disjunctive for vantage: any member that reaches substrate raises the set."
+        }
+      },
+      "required": ["vantage", "method", "basis"]
+    },
+    "grade": {
+      "type": "string",
+      "enum": ["E0", "E1", "E2", "E3", "E4"],
+      "description": "Evidence strength grade. E0 Declared, E1 Observed, E2 Enforced, E3 Corroborated, E4 Anchored. E4 requires external timestamping, chain-linking, and independent verifiability."
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": {
+            "type": "string",
+            "enum": ["emission-conformant", "operationally-conformant"],
+            "description": "emission-conformant: the agent emitted the telemetry that the policy expects. operationally-conformant: the agent actually performed the actions the policy permits, verified by observation."
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Record IDs of the observations that support this claim."
+          }
+        },
+        "required": ["claim", "evidence"]
+      },
+      "description": "Receipt claims. These are the vocabulary terms registered with the AAIF taxonomy workstream."
+    },
+    "reconciliation": {
+      "type": "object",
+      "properties": {
+        "agent_claim": {
+          "type": "string",
+          "description": "What the agent self-reported."
+        },
+        "boundary_observation": {
+          "type": "string",
+          "description": "What a gateway, sandbox, or external authority observed."
+        },
+        "state": {
+          "type": "string",
+          "enum": ["agreement", "contradiction", "no_independent_evidence"],
+          "description": "Three-state reconciliation: agreement, contradiction, or the explicit absence of independent evidence."
+        }
+      },
+      "required": ["agent_claim", "boundary_observation", "state"]
+    },
+    "integrity": {
+      "type": "object",
+      "properties": {
+        "signed": {
+          "type": "boolean",
+          "description": "Whether the record carries a signature. The schema records presence, not the mechanism."
+        },
+        "chain_linked": {
+          "type": "boolean",
+          "description": "Whether the record is chained to prior records (e.g. Merkle-style). Presence only."
+        },
+        "timestamped": {
+          "type": "boolean",
+          "description": "Whether the record carries an external trusted timestamp (e.g. RFC 3161). Presence only."
+        },
+        "verifiable_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Identifiers for independent verifiers that can check the record."
+        }
+      },
+      "required": ["signed", "chain_linked", "timestamped"]
+    },
+    "declared_vs_observed": {
+      "type": "object",
+      "properties": {
+        "permitted": {
+          "type": "string",
+          "description": "What the declared capability/permission scope permitted."
+        },
+        "occurred": {
+          "type": "string",
+          "description": "What was actually observed to occur."
+        }
+      },
+      "required": ["permitted", "occurred"]
+    },
+    "sampling": {
+      "type": "object",
+      "properties": {
+        "sampled": {
+          "type": "boolean",
+          "description": "Whether this record may have been sampled or dropped at collection."
+        },
+        "audit_required": {
+          "type": "boolean",
+          "description": "Whether this record belongs to an audit-required class that must not be sampled away."
+        },
+        "collection_gap": {
+          "type": "boolean",
+          "description": "Whether a known collection gap applies."
+        }
+      },
+      "required": ["sampled", "audit_required"]
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Record IDs this record was derived from, required when relationship = derived."
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_id",
+    "agent_id",
+    "timestamp",
+    "observation",
+    "verification",
+    "grade",
+    "integrity"
+  ]
+}

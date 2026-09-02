@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/narko4u/evidence-record-spec/main/evidence-appraisal-0.1.schema.json",
+  "title": "Evidence Appraisal",
+  "description": "A verifier's appraisal artifact: the record of what an independent verifier actually checked about an evidence record, and the grade it concluded. The E-grade is an output of appraisal and lives here, in the verifier's artifact — never as a stamp the producer adds to its own record (RATS split: evidence in, appraisal policy is the bridge, attestation results out). Deliberately implementation-free: it records presence and conclusion, not mechanism.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "appraisal_id": {
+      "type": "string",
+      "description": "Stable identifier for this appraisal."
+    },
+    "subject_record": {
+      "type": "object",
+      "properties": {
+        "record_id": {
+          "type": "string",
+          "description": "Identifier of the evidence record being appraised."
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "Content address of the appraised evidence record: SHA-256 over the JCS (RFC 8785) canonical form of the full record. Bare 64-char lowercase hex."
+        }
+      },
+      "required": ["record_id", "digest"],
+      "additionalProperties": false
+    },
+    "e_grade": {
+      "type": "string",
+      "enum": ["E0", "E1", "E2", "E3", "E4"],
+      "description": "The grade the verifier actually checked and concluded — never a depth higher than it executed. E0 Declared, E1 Observed, E2 Enforced, E3 Corroborated, E4 Anchored."
+    },
+    "claim_type": {
+      "type": "string",
+      "enum": ["emission-conformant", "operationally-conformant"],
+      "description": "Which receipt claim of the subject record was appraised."
+    },
+    "reconciliation_state": {
+      "type": "string",
+      "enum": ["agreement", "contradiction", "no_independent_evidence"],
+      "description": "The verifier's three-state reconciliation finding between the record's self-report and its own observation."
+    },
+    "verifier_id": {
+      "type": "string",
+      "description": "Identifier for the independent verifier that produced this appraisal."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the appraisal was performed, ISO 8601."
+    },
+    "signed": {
+      "type": "boolean",
+      "description": "Whether the appraisal itself carries a signature. Presence only, no mechanism."
+    }
+  },
+  "required": [
+    "schema_version",
+    "appraisal_id",
+    "subject_record",
+    "e_grade",
+    "claim_type",
+    "reconciliation_state",
+    "verifier_id",
+    "timestamp",
+    "signed"
+  ],
+  "additionalProperties": false
+}

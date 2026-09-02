@@ -33,33 +33,62 @@
       "properties": {
         "source": {
           "type": "string",
-          "enum": ["agent_self_report", "framework", "gateway_proxy", "identity_provider", "sandbox", "operating_system", "network_sensor", "security_sensor", "external_authority"],
+          "enum": [
+            "agent_self_report",
+            "framework",
+            "gateway_proxy",
+            "identity_provider",
+            "sandbox",
+            "operating_system",
+            "network_sensor",
+            "security_sensor",
+            "external_authority"
+          ],
           "description": "Where the observation originated. Distinguishes agent self-reporting from boundary or external evidence, per the AAIF OT-WG source-and-trust requirement."
         },
         "relationship": {
           "type": "string",
-          "enum": ["direct", "corroborating", "contradictory", "derived"],
+          "enum": [
+            "direct",
+            "corroborating",
+            "contradictory",
+            "derived"
+          ],
           "description": "What the observation claims about the action. Derived records must carry provenance referencing the records they were derived from."
         },
         "directness": {
           "type": "string",
-          "enum": ["direct_observation", "inferred"],
+          "enum": [
+            "direct_observation",
+            "inferred"
+          ],
           "description": "Whether the record is a direct observation of the action or inferred from other telemetry."
         }
       },
-      "required": ["source", "relationship", "directness"]
+      "required": [
+        "source",
+        "relationship",
+        "directness"
+      ],
+      "additionalProperties": false
     },
     "verification": {
       "type": "object",
       "properties": {
         "vantage": {
           "type": "string",
-          "enum": ["substrate", "artifact"],
+          "enum": [
+            "substrate",
+            "artifact"
+          ],
           "description": "Substrate = evidence the artifact cannot forge or suppress; artifact = evidence inside the artifact's write path. The weaker of declared and engine-reachable wins."
         },
         "method": {
           "type": "string",
-          "enum": ["intercepted", "reconstructed"],
+          "enum": [
+            "intercepted",
+            "reconstructed"
+          ],
           "description": "Intercepted = captured at the time of the action; reconstructed = established after the fact. Orthogonal to vantage."
         },
         "basis": {
@@ -75,11 +104,22 @@
           "description": "The detection or evidence engines involved. Composition is disjunctive for vantage: any member that reaches substrate raises the set."
         }
       },
-      "required": ["vantage", "method", "basis"]
+      "required": [
+        "vantage",
+        "method",
+        "basis"
+      ],
+      "additionalProperties": false
     },
     "grade": {
       "type": "string",
-      "enum": ["E0", "E1", "E2", "E3", "E4"],
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
       "description": "Evidence strength grade. E0 Declared, E1 Observed, E2 Enforced, E3 Corroborated, E4 Anchored. E4 requires external timestamping, chain-linking, and independent verifiability."
     },
     "claims": {
@@ -89,7 +129,10 @@
         "properties": {
           "claim": {
             "type": "string",
-            "enum": ["emission-conformant", "operationally-conformant"],
+            "enum": [
+              "emission-conformant",
+              "operationally-conformant"
+            ],
             "description": "emission-conformant: the agent emitted the telemetry that the policy expects. operationally-conformant: the agent actually performed the actions the policy permits, verified by observation."
           },
           "evidence": {
@@ -100,7 +143,11 @@
             "description": "Record IDs of the observations that support this claim."
           }
         },
-        "required": ["claim", "evidence"]
+        "required": [
+          "claim",
+          "evidence"
+        ],
+        "additionalProperties": false
       },
       "description": "Receipt claims. These are the vocabulary terms registered with the AAIF taxonomy workstream."
     },
@@ -117,11 +164,20 @@
         },
         "state": {
           "type": "string",
-          "enum": ["agreement", "contradiction", "no_independent_evidence"],
+          "enum": [
+            "agreement",
+            "contradiction",
+            "no_independent_evidence"
+          ],
           "description": "Three-state reconciliation: agreement, contradiction, or the explicit absence of independent evidence."
         }
       },
-      "required": ["agent_claim", "boundary_observation", "state"]
+      "required": [
+        "agent_claim",
+        "boundary_observation",
+        "state"
+      ],
+      "additionalProperties": false
     },
     "integrity": {
       "type": "object",
@@ -146,7 +202,12 @@
           "description": "Identifiers for independent verifiers that can check the record."
         }
       },
-      "required": ["signed", "chain_linked", "timestamped"]
+      "required": [
+        "signed",
+        "chain_linked",
+        "timestamped"
+      ],
+      "additionalProperties": false
     },
     "declared_vs_observed": {
       "type": "object",
@@ -160,7 +221,11 @@
           "description": "What was actually observed to occur."
         }
       },
-      "required": ["permitted", "occurred"]
+      "required": [
+        "permitted",
+        "occurred"
+      ],
+      "additionalProperties": false
     },
     "sampling": {
       "type": "object",
@@ -178,7 +243,11 @@
           "description": "Whether a known collection gap applies."
         }
       },
-      "required": ["sampled", "audit_required"]
+      "required": [
+        "sampled",
+        "audit_required"
+      ],
+      "additionalProperties": false
     },
     "provenance": {
       "type": "array",
@@ -197,5 +266,6 @@
     "verification",
     "grade",
     "integrity"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -63,6 +63,36 @@ Every record carries four things that matter to an auditor:
 | `samples/er-00004-e3-contradiction.json` | E3 | Agent claim contradicted by gateway observation |
 | `samples/er-00005-e3-derived-reconstructed.json` | E3 | Derived record with provenance, reconstructed method |
 
+## Evidence Appraisal (verifier artifact)
+
+The E-grade is an **output of appraisal**, not a field the producer stamps
+(discipline rule 1 in `VERIFIABILITY-OVERVIEW.md`). The `evidence-appraisal`
+artifact records what an independent verifier actually checked about an
+evidence record and the grade it concluded:
+
+| File | Subject | Concluded grade | Point it demonstrates |
+|---|---|---|---|
+| `samples/ea-00001-e4-agreement.json` | er-00003 | E4 | Verifier confirms the E4 record, agreement |
+| `samples/ea-00002-e0-no-independent-evidence.json` | er-00001 | E0 | Self-report appraised honestly, no independent evidence |
+| `samples/ea-00003-e3-contradiction.json` | er-00004 | E3 | Verifier finds agent claim contradicted |
+
+Schema: `evidence-appraisal-0.1.schema.json`. The appraisal cites its subject
+by typed digest (`subject_record.digest`, bare 64-char lowercase hex = SHA-256
+over the JCS canonical form of the full evidence record) so the grade binds to
+a specific record version, never to a floating claim.
+
+## Content addresses (CPB registry contexts)
+
+Each record/appraisal has a derived identifier: SHA-256 over the JCS (RFC 8785)
+canonical form of the **full** record (no exclusion set — the field set is the
+closed schema member list; records are schema-validated before digesting, so an
+unrecognised member or enum value is rejected, never digested). Pinned
+conformance vectors for both artifact types live in
+[`vectors/cpb-registry/`](vectors/cpb-registry/) in the same format used by the
+Action State Group CPB registry (`machine-mandate` precedent): positive KATs
+with canonical bytes + digests, negatives with reject semantics and mutation
+probes.
+
 ## Validation
 
 ```bash

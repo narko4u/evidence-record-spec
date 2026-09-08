@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Evidence Record Specification
+# Copyright (c) 2026 Empire Labs Pty Ltd
+# SPDX-License-Identifier: Apache-2.0
+
 """Validate evidence records against evidence-record-0.1.schema.json.
 
 Two layers:

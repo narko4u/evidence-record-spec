@@ -51,7 +51,7 @@ README "Independent implementation notice".
 
 ## 4. Creation timeline
 
-- 2026-08-29: repository authored at /home/vault/evidence-record-spec
+- 2026-08-29: repository authored in a private local workspace
 - Commit d762c59: schema + validator + samples + README + submission draft
 - Commit d87d670: independent implementation notice added
 - Author identity: narko4u <narko4u@users.noreply.github.com>, DCO signed
@@ -59,6 +59,5 @@ README "Independent implementation notice".
 ## 5. Storage locations of this record
 
 - This file: EVIDENCE-OF-INDEPENDENCE.md (in-repo, travels with the code)
-- Copy: /mnt/c/VaultSentinel/Empire_Knowledge/ (private vault, git-backed
-  to PRIVATE narko4u/empire-knowledge, never public)
+- Copy: held in a private, git-backed vault (never public)
 - Verified hashes above pin the exact byte content at this date.

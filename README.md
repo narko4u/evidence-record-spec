@@ -97,7 +97,10 @@ probes.
 
 ```bash
 pip install jsonschema
-python validate_evidence.py samples/
+# Evidence records and evidence appraisals are separate schema families, so each
+# is validated against its own schema:
+python validate_evidence.py --schema evidence-record-0.1.schema.json samples/er-*.json
+python validate_evidence.py --schema evidence-appraisal-0.1.schema.json samples/ea-*.json
 python validate_evidence.py path/to/records/*.json
 ```
 

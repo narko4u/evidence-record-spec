@@ -60,9 +60,57 @@ How strong is the evidence, independent of where it came from?
 3. **Basis**: composed as `{vantage}_{method}` (e.g. `substrate_intercepted`),
    the same derivation rule used in verification basis composition.
 
+### Axis C: witness scope
+
+Who is able to produce the record at all, and can the deployment bring that
+party into agreement with itself?
+
+The two axes above describe how evidence was obtained and how strong it is.
+This axis answers a different question, the custody question. A record can be
+strongly obtained and still held only by the party it describes.
+
+| Scope | Who can observe satisfaction | Evidence comes from |
+|---|---|---|
+| SELF | The deployment's own reports; the enforcement point is the only party able to produce the evidence | The deployment's own account, with no external path |
+| PEER | Another party within an agreement: a counterparty, a peer mediating the same interaction, or a tenant | Artifacts exchanged within the agreement |
+| EXTERNAL | A party outside the trust domain: an auditor, a regulator, or any non-trusting third party | Artifacts obtainable and checkable without cooperation from the enforcement point |
+
+**Assignment rule.** A requirement is SELF-scope unless a concrete artifact
+path exists that lets the named witness check it without relying on the
+enforcement point's own account. Most enforcement requirements are SELF-only
+under current wire formats. That is a finding, not a failure, and it is
+recorded as such.
+
+**Scope is orthogonal to the strength grade.** A record held by an EXTERNAL
+party can still be the emitter's own account of itself, if the external party
+holds a symmetric key the emitter also holds. A substrate-vantage record can
+be SELF-scope, when only the deployment can produce it. Keeping custody and
+forgeability as separate questions is what stops a summary value from letting
+a SELF-scope deployment read as externally witnessed.
+
+An enforcement requirement with no EXTERNAL witness basis is a first-class
+open item rather than a silent default, so a reader can see which
+requirements are only ever checked by the party being checked.
+
+**Provenance.** The SELF / PEER / EXTERNAL grading, with this definition, was
+proposed by Empire Labs and placed on the public record in the Agent Control
+Standard repository on 2026-08-28:
+
+- First proposal, 2026-08-28T07:53:31Z:
+  https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-5449932104
+- Definitions table, 2026-08-28T13:04:26Z:
+  https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-5452852355
+- Filed as a taxonomy term at AAIF, 2026-08-29:
+  https://github.com/aaif/ws-taxonomy-landscape/issues/53
+
+The token `witnessScope` also exists as a term of art in an unrelated
+protocol, where it names a transaction witness's verification scope. This
+document defines the grading, not the spelling, and the two uses are
+unrelated. Cite the definition rather than the token.
+
 ### The E0-E4 evidence strength ladder
 
-The two axes compose into a grade used to state, in one label, how anchored
+Axes A and B compose into a grade used to state, in one label, how anchored
 the evidence is:
 
 | Grade | Name | What it means | Minimum integrity markers |

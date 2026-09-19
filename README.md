@@ -53,6 +53,21 @@ Every record carries four things that matter to an auditor:
    - `reconciliation`: agreement, contradiction, or the explicit absence of
      independent evidence (three states, not two)
 
+## Witness scope (vocabulary)
+
+A separate vocabulary answers the custody question: who is able to produce a
+record at all. Scope is graded SELF (the deployment's own account), PEER (a
+counterparty in the same agreement), or EXTERNAL (a party outside the trust
+domain). It names custody, not forgeability, and it is deliberately not a
+strength value: collapsing it into a summary figure would let a SELF-scope
+deployment read as externally witnessed.
+
+The scope name travels alongside the observation and verification axes but is
+not one of them, because it describes custody rather than record content.
+
+Definitions, assignment rule, and the public provenance of the grading:
+[`VERIFIABILITY-OVERVIEW.md`](VERIFIABILITY-OVERVIEW.md#axis-c-witness-scope).
+
 ## Sample records
 
 | File | Grade | Point it demonstrates |

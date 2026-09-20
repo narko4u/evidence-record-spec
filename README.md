@@ -53,7 +53,7 @@ Every record carries four things that matter to an auditor:
    - `reconciliation`: agreement, contradiction, or the explicit absence of
      independent evidence (three states, not two)
 
-## Witness scope (vocabulary)
+## witness-scope (vocabulary)
 
 A separate vocabulary answers the custody question: who is able to produce a
 record at all. Scope is graded SELF (the deployment's own account), PEER (a

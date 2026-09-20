@@ -60,7 +60,7 @@ How strong is the evidence, independent of where it came from?
 3. **Basis**: composed as `{vantage}_{method}` (e.g. `substrate_intercepted`),
    the same derivation rule used in verification basis composition.
 
-### Axis C: witness scope
+### Axis C: witness-scope
 
 Who is able to produce the record at all, and can the deployment bring that
 party into agreement with itself?

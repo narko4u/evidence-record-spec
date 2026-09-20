@@ -60,7 +60,7 @@ How strong is the evidence, independent of where it came from?
 3. **Basis**: composed as `{vantage}_{method}` (e.g. `substrate_intercepted`),
    the same derivation rule used in verification basis composition.
 
-### Axis C: witness-scope
+### Axis C: witness_scope
 
 Who is able to produce the record at all, and can the deployment bring that
 party into agreement with itself?
@@ -92,21 +92,29 @@ An enforcement requirement with no EXTERNAL witness basis is a first-class
 open item rather than a silent default, so a reader can see which
 requirements are only ever checked by the party being checked.
 
-**Provenance.** The SELF / PEER / EXTERNAL grading, with this definition, was
-proposed by Empire Labs and placed on the public record in the Agent Control
-Standard repository on 2026-08-28:
+**Provenance.** The term `witness_scope` and the SELF / PEER / EXTERNAL grading
+were proposed by Empire Labs and placed on the public record starting
+2026-08-26, inside a bounded verdict envelope whose field names are all
+snake_case (`verification_basis`, `evidence_refs`, `verifier_signature` and
+`witness_scope` among them):
 
-- First proposal, 2026-08-28T07:53:31Z:
+- First written use of the term, 2026-08-26T12:21:56Z, AAIF agentic commerce
+  working group, issue #5, body line 32:
+  https://github.com/aaif/wg-agentic-commerce/issues/5
+- First proposal of the grading in the Agent Control Standard,
+  2026-08-28T07:53:31Z:
   https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-5449932104
 - Definitions table, 2026-08-28T13:04:26Z:
   https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-5452852355
 - Filed as a taxonomy term at AAIF, 2026-08-29:
   https://github.com/aaif/ws-taxonomy-landscape/issues/53
 
-The token `witnessScope` also exists as a term of art in an unrelated
-protocol, where it names a transaction witness's verification scope. This
-document defines the grading, not the spelling, and the two uses are
-unrelated. Cite the definition rather than the token.
+Our spelling is `witness_scope`, matching the snake_case field names it was
+first written among. The camelCase token `witnessScope` also exists as a term
+of art in an unrelated protocol, where it names a transaction witness's
+verification scope, and it appears as a field name in one public evidence
+corpus. Neither of those is this. This document defines the grading, not the
+spelling, and the uses are unrelated. Cite the definition rather than a token.
 
 ### The E0-E4 evidence strength ladder
 

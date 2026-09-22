@@ -157,6 +157,24 @@ sample records in this repository are copied from any other project. The
 signing, chain-linking, and timestamping mechanisms that would produce these
 records are out of scope for this repository entirely.
 
+---
+
+## Acknowledgements
+
+The schemas here are written against **[JSON Schema](https://json-schema.org/)**
+draft 2020-12, used as the schema language only. JSON Schema is an independent
+specification with its own maintainers.
+
+The vocabulary this format shares with adjacent agent-observability work
+(`vantage`, `method`, `basis`, `substrate`, observation source and relationship)
+is common terminology in that space. No code, schema structure, documentation or
+sample records in this repository are copied from any other project - see the
+independent implementation notice above.
+
+There are no third-party runtime dependencies.
+
+---
+
 ## License
 
 - Schema and validator: Apache-2.0

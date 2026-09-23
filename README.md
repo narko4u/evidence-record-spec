@@ -183,6 +183,18 @@ presence, not mechanism. An auditor can verify a record against this format
 without any knowledge of the system that produced it, and a producer can
 implement the format without adopting any particular stack.
 
+**This repository is also not a service.** It is the specification and
+validation layer: it defines what a conforming record contains, and checks
+whether a given artifact conforms to that format. It does not anchor, attest,
+notarise or hold custody of any record. Validating a record here produces no
+anchor and involves no party independent of whoever runs the validator.
+Anchoring, replay protection and custody of records are operations carried out
+outside the format, and are out of scope here.
+
+A record that validates is a statement about the record's own content. It is
+not a warranty about the system that produced it, and it is not evidence that
+the operation the record describes actually happened.
+
 ## Independent implementation notice
 
 This project is an independent implementation. It shares vocabulary with the

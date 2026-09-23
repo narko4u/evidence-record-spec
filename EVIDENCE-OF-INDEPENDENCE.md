@@ -11,17 +11,20 @@ It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
 The table below is a point-in-time snapshot and is refreshed on revision. It was
-last refreshed 2026-09-22, when the grade-ceiling revision changed
-`validate_evidence.py`, `evidence-record-0.1.schema.json` and the sample records.
+last refreshed 2026-09-23, alongside the grade-ceiling revision that changed
+`validate_evidence.py`, `evidence-record-0.1.schema.json`, `README.md` and the
+sample records. Two entries (`README.md`, `validate_evidence.py`) had changed
+without the table being refreshed; every entry below is recomputed and verified
+against the shipped bytes.
 
-## 1. Files covered (SHA-256, as of 2026-09-22)
+## 1. Files covered (SHA-256, as of 2026-09-23)
 
 | File | SHA-256 |
 |---|---|
-| README.md | `21d288eeed086d481187e32706420197fc76058eed9900abe053536c792a28e5` |
+| README.md | `5d8ff568239507731d7e32494283988ff276643f5a0721a6919e580040479a60` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
-| validate_evidence.py | `2c1e5e35fc09e5ec67245ac8eadd01f3270c0c39d74e2df85dc813a6ac0c7266` |
+| validate_evidence.py | `bc546ad08e736bda735c792058d7d151d4594eccea21fb741fcd903063dbb2b6` |
 | samples/er-00001-e0-self-report.json | `acc3b72c46b52650ec4f31967872089e90440dae266a24aed52bba6e8dea441c` |
 | samples/er-00002-e2-emission-conformant.json | `7640db187fd130c446ddcb59c47554d1c1674572d19e51a844abb09ebd8142f4` |
 | samples/er-00003-e4-operationally-conformant.json | `72f2c233b71707098ed7e47f257432a9295e68c5142a51a8f015e693d136a129` |

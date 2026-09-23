@@ -70,7 +70,11 @@ Definitions, assignment rule, and the public provenance of the grading:
 
 ## Sample records
 
-| File | Grade | Point it demonstrates |
+The record carries the observation. The grade is what that observation
+supports and what an appraisal concludes from it, so it is never a member the
+record carries (discipline rule 1 in `VERIFIABILITY-OVERVIEW.md`).
+
+| File | Rung the observation supports | Point it demonstrates |
 |---|---|---|
 | `samples/er-00001-e0-self-report.json` | E0 | Self-report with no independent evidence |
 | `samples/er-00002-e2-emission-conformant.json` | E2 | Gateway corroboration, emission-conformant claim |
@@ -111,12 +115,19 @@ probes.
 ## Validation
 
 ```bash
-pip install jsonschema
-# Evidence records and evidence appraisals are separate schema families, so each
-# is validated against its own schema:
-python validate_evidence.py --schema evidence-record-0.1.schema.json samples/er-*.json
-python validate_evidence.py --schema evidence-appraisal-0.1.schema.json samples/ea-*.json
+pip install jsonschema rfc8785
+# Records and appraisals are separate schema families. The schema is selected
+# per file automatically, so a directory holding both validates in one call:
+python validate_evidence.py samples/
 python validate_evidence.py path/to/records/*.json
+# An explicit schema still overrides the automatic selection:
+python validate_evidence.py --schema evidence-record-0.1.schema.json samples/er-*.json
+```
+
+The ceiling rules have their own regression fixtures, asserted to fail:
+
+```bash
+python fixtures/check_negative_fixtures.py
 ```
 
 The validator checks two layers:
@@ -125,10 +136,37 @@ The validator checks two layers:
 2. **Semantic consistency** : things the schema cannot express:
    - `basis` must equal the composition of `vantage` + `method`
    - `derived` observations must carry `provenance`
-   - grade-to-integrity requirements (E4 requires timestamp + chain-linking +
-     independent verifier; lower grades require fewer)
-   - `operationally-conformant` claims require grade >= E3
+   - the grade is **derived** from `observation.source`, `relationship`,
+     `reconciliation.state`, `verification.basis_engines` and the `integrity`
+     markers, and capped by them. A record cannot reach a rung its own
+     observation cannot support, whatever it declares about itself: a
+     self-report is E0, a framework observation is E1, and a boundary or
+     external observation reaches higher only with corroboration, and for E4
+     only with chain-linking, timestamping and a verifier independent of the
+     agent. `verification.vantage` is **not** an input to the ceiling: it is
+     the first half of the `basis` composition checked above
+   - `operationally-conformant` claims require a ceiling of at least E3 and a
+     `reconciliation.state` of `agreement`
    - unrecognised enum values fail (closed vocabulary, no silent upgrades)
+   - an unrecognised member fails (`additionalProperties: false`), so a
+     producer cannot stamp a grade onto a record at all
+
+On the appraisal side the citation is a binding, not a label:
+
+   - `subject_record.digest` must be the JCS (RFC 8785) SHA-256 of the record
+     actually named, so the ceiling is computed over the artifact the appraisal
+     pins and never over a different one
+   - `claim_type` must name a receipt claim the subject makes, wherever the
+     subject makes any. An appraisal may appraise a claim the subject does not
+     yet assert — that is how a low grade is recorded honestly
+     (`samples/ea-00002`) — but it may not attribute a claim the subject never
+     made
+   - the concluded grade cannot exceed the ceiling derived from its subject
+     record
+
+The appraisal path deliberately does **not** apply the claim floors: concluding
+a grade *below* a claim's floor is the point of appraisal. Flooring belongs to
+the producer's claim in the record layer.
 
 ## Scope boundary
 

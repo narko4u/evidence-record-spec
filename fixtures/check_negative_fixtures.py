@@ -14,9 +14,9 @@ HERE = Path(__file__).resolve().parent.parent
 FIXTURES = HERE / "fixtures" / "negative"
 SAMPLES = HERE / "samples"
 
-def run(paths):
+def run(paths, extra=()):
     r = subprocess.run(
-        [sys.executable, str(HERE / "validate_evidence.py")] + [str(p) for p in paths],
+        [sys.executable, str(HERE / "validate_evidence.py"), *extra] + [str(p) for p in paths],
         cwd=HERE, capture_output=True, text=True,
     )
     return r.returncode, r.stdout + r.stderr
@@ -53,6 +53,54 @@ if rc != 0:
     print("\nFAIL the positive sample set no longer validates:")
     print(out)
     failures.append(SAMPLES)
+
+# --- paired regression: the same appraisal, with and without its subject ------
+# Whether a defect is caught must not depend on which files happened to be
+# passed. A subject-absent appraisal is reported UNRESOLVED and rejected, and
+# supplying the subject must not be what decides the outcome.
+print()
+print("paired regression: same appraisal, subject supplied vs absent")
+
+PAIRED = [
+    # (appraisal, subject id, subject-absent must be rejected, present must be rejected)
+    (FIXTURES / "nr-07-appraisal-subject-digest-does-not-bind.json", "er-00003", True, True),
+    (SAMPLES / "ea-00001-e4-agreement.json", "er-00003", True, False),
+]
+
+for appraisal, rid, absent_rejects, present_rejects in PAIRED:
+    subjects = sorted(SAMPLES.glob(f"{rid}-*.json"))
+    if not subjects:
+        print(f"FAIL {appraisal.name}: no subject record '{rid}' to pair with")
+        failures.append(appraisal)
+        continue
+
+    rc_absent, out_absent = run([appraisal])
+    rc_present, _ = run([appraisal] + subjects)
+
+    absent_bad = (rc_absent == 0) if absent_rejects else (rc_absent != 0)
+    silent_pass = absent_rejects and rc_absent != 0 and "UNRESOLVED" not in out_absent
+    verdict_absent = "ACCEPTED" if rc_absent == 0 else "rejected"
+    print(f"{'FAIL' if (absent_bad or silent_pass) else 'ok  '} {appraisal.name} alone"
+          f" -> rc={rc_absent} ({verdict_absent}"
+          f"{', not reported UNRESOLVED' if silent_pass else ''})")
+    if absent_bad or silent_pass:
+        failures.append(appraisal)
+
+    present_bad = (rc_present == 0) if present_rejects else (rc_present != 0)
+    verdict_present = "ACCEPTED" if rc_present == 0 else "rejected"
+    print(f"{'FAIL' if present_bad else 'ok  '} {appraisal.name} + {rid}"
+          f" -> rc={rc_present} ({verdict_present})")
+    if present_bad:
+        failures.append(appraisal)
+
+    # --schema-only is the explicit, intentional weaker mode: schema-valid on
+    # its own with no semantics attempted. It must be reachable, and it must be
+    # the only way to get a pass out of a subject-absent appraisal.
+    rc_schema, _ = run([appraisal], extra=["--schema-only"])
+    print(f"{'ok  ' if rc_schema == 0 else 'FAIL'} {appraisal.name} alone --schema-only"
+          f" -> rc={rc_schema}")
+    if rc_schema != 0:
+        failures.append(appraisal)
 
 print()
 if failures:

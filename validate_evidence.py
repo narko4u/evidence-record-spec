@@ -54,6 +54,15 @@ label. Three things must hold, beyond schema conformance:
   3. the concluded `e_grade` may never exceed the ceiling derived from the
      subject record, so a verifier cannot record a depth it did not execute.
 
+A fourth rule is about scope rather than content. The three checks above are
+only meaningful once the subject record is actually in hand, so an appraisal
+whose subject was not supplied is reported UNRESOLVED and counts as a failure.
+It must never quietly pass with no semantic check performed, because then a pass
+would mean "we happened not to load the subject" rather than "the citation
+binds". Schema-only validation remains available, but it has to be asked for
+explicitly with `--schema-only`, so the weaker guarantee can never be the
+accidental one.
+
 Note what is deliberately NOT enforced here: the appraisal path does not apply
 `CLAIM_MIN_GRADE`. Concluding a grade BELOW a claim's floor is the whole point of
 appraisal (see samples/ea-00002: an honest E0 against an emission-conformant
@@ -261,14 +270,31 @@ def validate_record(record: dict, schema: dict) -> tuple[bool, list[str]]:
     return (not sem), sem
 
 
-def validate_appraisal(appraisal: dict, schema: dict, subject: dict | None) -> tuple[bool, list[str]]:
+def validate_appraisal(
+    appraisal: dict, schema: dict, subject: dict | None, *, schema_only: bool = False
+) -> tuple[bool, list[str], bool]:
+    """Validate an appraisal. Returns (ok, errors, unresolved).
+
+    `unresolved` is True when the appraisal is schema-valid but its subject
+    record was not supplied, so none of the semantic checks could run. That is
+    reported separately from a plain failure so the caller can say so out loud.
+    """
     try:
         jsonschema.validate(instance=appraisal, schema=schema)
     except jsonschema.ValidationError as e:
-        return False, [f"schema: {e.message} (at {'/'.join(str(p) for p in e.path) or '$'})"]
+        return False, [f"schema: {e.message} (at {'/'.join(str(p) for p in e.path) or '$'})"], False
+
+    if schema_only:
+        return True, [], False
 
     if subject is None:
-        return True, []
+        cited = (appraisal.get("subject_record") or {}).get("record_id") or "<unnamed>"
+        return False, [
+            f"subject record '{cited}' was not supplied, so the citation cannot be "
+            f"resolved and none of the appraisal checks could run; pass the subject "
+            f"record alongside the appraisal, or use --schema-only to state "
+            f"explicitly that only schema conformance is asserted"
+        ], True
 
     errors = []
     cited = appraisal.get("subject_record") or {}
@@ -311,7 +337,7 @@ def validate_appraisal(appraisal: dict, schema: dict, subject: dict | None) -> t
             f"appraised e_grade {concluded} exceeds the ceiling {ceiling} derived "
             f"from subject record '{subject_id}'"
         )
-    return (not errors), errors
+    return (not errors), errors, False
 
 
 def kind_of(doc: dict) -> str:
@@ -335,6 +361,12 @@ def main(argv=None) -> int:
     parser.add_argument(
         "--strict-schema", action="store_true",
         help="force --schema for every file instead of routing by document kind",
+    )
+    parser.add_argument(
+        "--schema-only", action="store_true",
+        help="assert schema conformance only and skip every cross-document check. "
+             "Without this flag an appraisal whose subject record is not supplied "
+             "is reported UNRESOLVED and fails.",
     )
     args = parser.parse_args(argv)
 
@@ -363,6 +395,7 @@ def main(argv=None) -> int:
     }
 
     failed = 0
+    unresolved_count = 0
     for f in files:
         doc = docs.get(f)
         if doc is None:
@@ -370,9 +403,12 @@ def main(argv=None) -> int:
             continue
 
         kind = kind_of(doc)
+        unresolved = False
         if kind == "appraisal":
             subject = by_record_id.get((doc.get("subject_record") or {}).get("record_id"))
-            ok, errors = validate_appraisal(doc, appraisal_schema, subject)
+            ok, errors, unresolved = validate_appraisal(
+                doc, appraisal_schema, subject, schema_only=args.schema_only
+            )
         elif kind == "record":
             ok, errors = validate_record(doc, record_schema)
         else:
@@ -385,11 +421,17 @@ def main(argv=None) -> int:
             print(f"OK   {f.name}")
         else:
             failed += 1
-            print(f"FAIL {f.name}")
+            label = "UNRESOLVED" if unresolved else "FAIL"
+            if unresolved:
+                unresolved_count += 1
+            print(f"{label} {f.name}")
             for e in errors:
                 print(f"     - {e}")
 
-    print(f"\n{len(files) - failed}/{len(files)} records valid")
+    summary = f"\n{len(files) - failed}/{len(files)} records valid"
+    if unresolved_count:
+        summary += f", {unresolved_count} unresolved (subject record not supplied)"
+    print(summary)
     return 1 if failed else 0
 
 

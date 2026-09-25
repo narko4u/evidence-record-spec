@@ -10,20 +10,27 @@ implementation, prepared in case the origin of any file is ever questioned.
 It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
-## 1. Files covered (SHA-256, as of 2026-08-29)
+The table below is a point-in-time snapshot and is refreshed on revision. It was
+last refreshed 2026-09-23, alongside the grade-ceiling revision that changed
+`validate_evidence.py`, `evidence-record-0.1.schema.json`, `README.md` and the
+sample records. Two entries (`README.md`, `validate_evidence.py`) had changed
+without the table being refreshed; every entry below is recomputed and verified
+against the shipped bytes.
+
+## 1. Files covered (SHA-256, as of 2026-09-23)
 
 | File | SHA-256 |
 |---|---|
-| README.md | `56a66b5414562fef9bfae5008d7f2b56884f4f9e5e7c131439e09cff9211e863` |
-| LICENSE | `e7b9d6c3d44c7f28ce0b4e4836567dd4b69fac6a5e99f51fdb11d0433db519f8` |
-| evidence-record-0.1.schema.json | `44f6720f9c5977dca1f0a4a433c37467b248935e9165880b3418fc5b646bfcaf` |
-| validate_evidence.py | `fa34405d08a098705cac81b31eb03c9b406894ecab8bc90c7d83f777e9a03566` |
-| samples/er-00001-e0-self-report.json | `02049e8fec98fbfd90dc212468166d9a7695ada5bff078d547e4fd5e5dc7ddd5` |
-| samples/er-00002-e2-emission-conformant.json | `268ea433346b5c6fb09e4c74eb57bd11e72303141f26161d822a2816256995d4` |
-| samples/er-00003-e4-operationally-conformant.json | `cf6e7e0bc69be95408cd0e2a237774c3f62813509508e3cc6bd935e6d78a4da0` |
-| samples/er-00004-e3-contradiction.json | `92982a30398644812a35c914f34e7aab904c206997f7333b2d28310caf117c63` |
-| samples/er-00005-e3-derived-reconstructed.json | `b2b4c8285f3cb8fb254d1c6b77b29b78ed086841955525ac4e01fea10cb1be6c` |
-| AAIF-SUBMISSION-DRAFT.md | `a021573166874a50828768844be1126bc03ad1c9389aafb7dcc0f5d0dd8fc4ff` |
+| README.md | `5d8ff568239507731d7e32494283988ff276643f5a0721a6919e580040479a60` |
+| LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
+| evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
+| validate_evidence.py | `bc546ad08e736bda735c792058d7d151d4594eccea21fb741fcd903063dbb2b6` |
+| samples/er-00001-e0-self-report.json | `acc3b72c46b52650ec4f31967872089e90440dae266a24aed52bba6e8dea441c` |
+| samples/er-00002-e2-emission-conformant.json | `7640db187fd130c446ddcb59c47554d1c1674572d19e51a844abb09ebd8142f4` |
+| samples/er-00003-e4-operationally-conformant.json | `72f2c233b71707098ed7e47f257432a9295e68c5142a51a8f015e693d136a129` |
+| samples/er-00004-e3-contradiction.json | `a8b60cd6364910fdbc0326840af96f6c36abec74f54819cbfb3cab54a33789b0` |
+| samples/er-00005-e3-derived-reconstructed.json | `8c6a35eaad22370008df4be92c9c82b94ddade42a468dd096346bcf6a8f6cd5d` |
+| AAIF-SUBMISSION-DRAFT.md | `ff84a37b12bc108aa315270c35dcfa01125a160f4eee0f2ad83dcb7af3d33c00` |
 
 ## 2. Similarity audit (run 2026-08-29, vs the reference implementation on disk)
 

@@ -1,14 +1,14 @@
 {
   "schema_version": "0.1.0",
-  "appraisal_id": "ea-00002",
+  "appraisal_id": "nr-04",
   "subject_record": {
     "record_id": "er-00001",
     "digest": "cee56e8f4633c7024b3d17cbc3a6dfb3cf515cd8bf1e5fa784e5c03882c543d3"
   },
-  "e_grade": "E0",
+  "e_grade": "E4",
   "claim_type": "emission-conformant",
   "reconciliation_state": "no_independent_evidence",
   "verifier_id": "verifier-alpha",
-  "timestamp": "2026-08-28T11:45:00+00:00",
+  "timestamp": "2026-09-22T00:00:00+00:00",
   "signed": true
 }

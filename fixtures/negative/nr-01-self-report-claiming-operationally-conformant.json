@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1.0",
-  "record_id": "er-00001",
+  "record_id": "nr-01",
   "agent_id": "agent-a1",
   "actor_chain": [
     "human-owner",
@@ -21,16 +21,26 @@
       "self_report"
     ]
   },
-  "claims": [],
+  "claims": [
+    {
+      "claim": "operationally-conformant",
+      "evidence": [
+        "nr-01"
+      ]
+    }
+  ],
   "reconciliation": {
     "agent_claim": "agent wrote config file",
     "boundary_observation": "none recorded",
     "state": "no_independent_evidence"
   },
   "integrity": {
-    "signed": false,
-    "chain_linked": false,
-    "timestamped": false
+    "signed": true,
+    "chain_linked": true,
+    "timestamped": true,
+    "verifiable_by": [
+      "anyone"
+    ]
   },
   "declared_vs_observed": {
     "permitted": "write /etc/app/config.json",

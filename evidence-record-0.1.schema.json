@@ -111,17 +111,6 @@
       ],
       "additionalProperties": false
     },
-    "grade": {
-      "type": "string",
-      "enum": [
-        "E0",
-        "E1",
-        "E2",
-        "E3",
-        "E4"
-      ],
-      "description": "Evidence strength grade. E0 Declared, E1 Observed, E2 Enforced, E3 Corroborated, E4 Anchored. E4 requires external timestamping, chain-linking, and independent verifiability."
-    },
     "claims": {
       "type": "array",
       "items": {
@@ -264,7 +253,6 @@
     "timestamp",
     "observation",
     "verification",
-    "grade",
     "integrity"
   ],
   "additionalProperties": false

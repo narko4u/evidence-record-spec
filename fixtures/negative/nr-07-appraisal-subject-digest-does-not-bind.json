@@ -1,14 +1,14 @@
 {
   "schema_version": "0.1.0",
-  "appraisal_id": "ea-00001",
+  "appraisal_id": "nr-07",
   "subject_record": {
     "record_id": "er-00003",
-    "digest": "532ddcf85629b02a5c3e0dd5231e74feba1dd3349e7d9a4c794ca681b69ec891"
+    "digest": "0000000000000000000000000000000000000000000000000000000000000000"
   },
   "e_grade": "E4",
   "claim_type": "operationally-conformant",
   "reconciliation_state": "agreement",
   "verifier_id": "verifier-alpha",
-  "timestamp": "2026-08-28T11:30:00+00:00",
+  "timestamp": "2026-09-22T00:00:00+00:00",
   "signed": true
 }

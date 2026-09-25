@@ -2,7 +2,11 @@
   "schema_version": "0.1.0",
   "record_id": "er-00003",
   "agent_id": "agent-b7",
-  "actor_chain": ["human-owner", "agent-b7", "tool-payment"],
+  "actor_chain": [
+    "human-owner",
+    "agent-b7",
+    "tool-payment"
+  ],
   "timestamp": "2026-08-02T14:22:41Z",
   "observation": {
     "source": "external_authority",
@@ -13,17 +17,24 @@
     "vantage": "substrate",
     "method": "intercepted",
     "basis": "substrate_intercepted",
-    "basis_engines": ["external_authority", "gateway_proxy"]
+    "basis_engines": [
+      "external_authority",
+      "gateway_proxy"
+    ]
   },
-  "grade": "E4",
   "claims": [
     {
       "claim": "emission-conformant",
-      "evidence": ["er-00003"]
+      "evidence": [
+        "er-00003"
+      ]
     },
     {
       "claim": "operationally-conformant",
-      "evidence": ["er-00003", "er-00003a"]
+      "evidence": [
+        "er-00003",
+        "er-00003a"
+      ]
     }
   ],
   "reconciliation": {
@@ -35,7 +46,10 @@
     "signed": true,
     "chain_linked": true,
     "timestamped": true,
-    "verifiable_by": ["verifier-public", "auditor-acme"]
+    "verifiable_by": [
+      "verifier-public",
+      "auditor-acme"
+    ]
   },
   "declared_vs_observed": {
     "permitted": "transfer up to $500 to vendor",
@@ -45,5 +59,7 @@
     "sampled": false,
     "audit_required": true
   },
-  "provenance": ["er-00003a"]
+  "provenance": [
+    "er-00003a"
+  ]
 }

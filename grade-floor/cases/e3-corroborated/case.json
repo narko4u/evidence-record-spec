@@ -1,0 +1,67 @@
+{
+  "case_id": "e3-corroborated",
+  "expect": {
+    "caps": [
+      "e4_requires_timestamp_chain_link_and_independent_verifier"
+    ],
+    "decision": "accepted",
+    "derived_grade": "E3"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-d9",
+      "tool-db-query"
+    ],
+    "agent_id": "agent-d9",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "er-00005",
+          "er-00005a",
+          "er-00005b"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "query observed in sensor logs (reconstructed)",
+      "permitted": "query customer table"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": true
+    },
+    "observation": {
+      "directness": "inferred",
+      "relationship": "derived",
+      "source": "security_sensor"
+    },
+    "provenance": [
+      "er-00005a",
+      "er-00005b"
+    ],
+    "reconciliation": {
+      "agent_claim": "agent queried customer table",
+      "boundary_observation": "reconstructed from security sensor logs",
+      "state": "agreement"
+    },
+    "record_id": "er-00005",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-04T11:03:55Z",
+    "verification": {
+      "basis": "substrate_reconstructed",
+      "basis_engines": [
+        "security_sensor",
+        "external_authority"
+      ],
+      "method": "reconstructed",
+      "vantage": "substrate"
+    }
+  }
+}

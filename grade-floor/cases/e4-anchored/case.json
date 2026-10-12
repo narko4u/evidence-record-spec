@@ -1,0 +1,72 @@
+{
+  "case_id": "e4-anchored",
+  "expect": {
+    "decision": "accepted",
+    "derived_grade": "E4"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-b7",
+      "tool-payment"
+    ],
+    "agent_id": "agent-b7",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "er-00003"
+        ]
+      },
+      {
+        "claim": "operationally-conformant",
+        "evidence": [
+          "er-00003",
+          "er-00003a"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "one $100 transfer observed by processor",
+      "permitted": "transfer up to $500 to vendor"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": true,
+      "verifiable_by": [
+        "verifier-public",
+        "auditor-acme"
+      ]
+    },
+    "observation": {
+      "directness": "direct_observation",
+      "relationship": "corroborating",
+      "source": "external_authority"
+    },
+    "provenance": [
+      "er-00003a"
+    ],
+    "reconciliation": {
+      "agent_claim": "agent transferred $100 to vendor",
+      "boundary_observation": "payment processor confirms $100 transfer",
+      "state": "agreement"
+    },
+    "record_id": "er-00003",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-02T14:22:41Z",
+    "verification": {
+      "basis": "substrate_intercepted",
+      "basis_engines": [
+        "external_authority",
+        "gateway_proxy"
+      ],
+      "method": "intercepted",
+      "vantage": "substrate"
+    }
+  }
+}

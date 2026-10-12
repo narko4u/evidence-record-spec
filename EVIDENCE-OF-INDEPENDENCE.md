@@ -11,24 +11,28 @@ It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
 The table below is a point-in-time snapshot and is refreshed on revision. It was
-last refreshed 2026-09-23, alongside the grade-ceiling revision that changed
-`validate_evidence.py`, `evidence-record-0.1.schema.json`, `README.md` and the
-sample records. Two entries (`README.md`, `validate_evidence.py`) had changed
-without the table being refreshed; every entry below is recomputed and verified
-against the shipped bytes.
+last refreshed 2026-10-12, alongside the E3 corroboration revision: the rule
+that E3 requires corroboration by a party outside the deployment's own domain is
+now executable in `evidence_grade_rules.py`, and the one sample it moved
+(`samples/er-00004-e2-contradiction.json`) kept its bytes, so its digest is
+unchanged from the previous refresh. Every entry below is recomputed and
+verified against the shipped bytes.
 
-## 1. Files covered (SHA-256, as of 2026-09-23)
+## 1. Files covered (SHA-256, as of 2026-10-12)
 
 | File | SHA-256 |
 |---|---|
-| README.md | `5d8ff568239507731d7e32494283988ff276643f5a0721a6919e580040479a60` |
+| README.md | `137744067c4d17533f504a34236703e8c68b5cdc529ca1c0348d5845f1f54de4` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
-| validate_evidence.py | `bc546ad08e736bda735c792058d7d151d4594eccea21fb741fcd903063dbb2b6` |
+| validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |
+| evidence_grade_rules.py | `e3c743a8d234209d310741aea3d654796498c3e1617283991ba14b9d82f7ec31` |
+| grade_floor.py | `97d7e41144fc1f724fc57785ba7d8fcfbb64a44d23afeaf7adf102748a5d0e36` |
+| gen_cases.py | `02a651c3d8bc6dae86709cde522f90ed9007e45d511914cfed7db128733aeb83` |
 | samples/er-00001-e0-self-report.json | `acc3b72c46b52650ec4f31967872089e90440dae266a24aed52bba6e8dea441c` |
 | samples/er-00002-e2-emission-conformant.json | `7640db187fd130c446ddcb59c47554d1c1674572d19e51a844abb09ebd8142f4` |
 | samples/er-00003-e4-operationally-conformant.json | `72f2c233b71707098ed7e47f257432a9295e68c5142a51a8f015e693d136a129` |
-| samples/er-00004-e3-contradiction.json | `a8b60cd6364910fdbc0326840af96f6c36abec74f54819cbfb3cab54a33789b0` |
+| samples/er-00004-e2-contradiction.json | `a8b60cd6364910fdbc0326840af96f6c36abec74f54819cbfb3cab54a33789b0` |
 | samples/er-00005-e3-derived-reconstructed.json | `8c6a35eaad22370008df4be92c9c82b94ddade42a468dd096346bcf6a8f6cd5d` |
 | AAIF-SUBMISSION-DRAFT.md | `ff84a37b12bc108aa315270c35dcfa01125a160f4eee0f2ad83dcb7af3d33c00` |
 

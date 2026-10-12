@@ -1,0 +1,61 @@
+{
+  "case_id": "e2-contradiction-not-corroboration",
+  "expect": {
+    "caps": [
+      "e3_requires_an_independent_party"
+    ],
+    "decision": "accepted",
+    "derived_grade": "E2"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-c2",
+      "tool-ssh"
+    ],
+    "agent_id": "agent-c2",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "gf-00006"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "SSH to prod host observed",
+      "permitted": "SSH to staging only"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": true
+    },
+    "observation": {
+      "directness": "direct_observation",
+      "relationship": "contradictory",
+      "source": "gateway_proxy"
+    },
+    "provenance": [],
+    "reconciliation": {
+      "agent_claim": "agent did not access prod host",
+      "boundary_observation": "gateway recorded SSH connection to prod host at 03:47",
+      "state": "contradiction"
+    },
+    "record_id": "gf-00006",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-03T03:47:12Z",
+    "verification": {
+      "basis": "substrate_intercepted",
+      "basis_engines": [
+        "gateway_proxy"
+      ],
+      "method": "intercepted",
+      "vantage": "substrate"
+    }
+  }
+}

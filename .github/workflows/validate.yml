@@ -31,6 +31,8 @@ jobs:
         run: python3 .github/scripts/firewall_check.py
       - name: Every sample label agrees with the rules that grade it
         run: python3 .github/scripts/sample_label_check.py
+      - name: Every negative fixture rejects under the derived ceiling
+        run: python3 fixtures/check_negative_fixtures.py
       - name: Grade floor corpus regenerates byte for byte
         run: |
           python3 gen_cases.py

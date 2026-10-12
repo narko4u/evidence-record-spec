@@ -24,5 +24,17 @@ Agreement is not the requirement for being listed. A reported disagreement that
 names the case, the rung and the reason is the more useful contribution, because
 it is the only signal that the published rule text is ambiguous.
 
+Mapping reports against another scheme's levels are listed the same way, in the
+crosswalk table below and [`CROSSWALK.md`](CROSSWALK.md) states how the two
+kinds of grade relate.
+
 Listing is at the maintainers' discretion and is not an endorsement of the
 implementation.
+
+| Scheme | Level | Reported E-grade | Report |
+|---|---|---|---|
+| none reported yet | | | |
+
+Rows above name the scheme's own published level definitions, so a reader can
+check the mapping against the text it was derived from. The maintainers do not
+assert a mapping on a scheme's behalf.

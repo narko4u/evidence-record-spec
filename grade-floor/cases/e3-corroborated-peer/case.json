@@ -1,0 +1,64 @@
+{
+  "case_id": "e3-corroborated-peer",
+  "expect": {
+    "caps": [
+      "e4_requires_timestamp_chain_link_and_independent_verifier"
+    ],
+    "decision": "accepted",
+    "derived_grade": "E3"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-d9",
+      "tool-order-send"
+    ],
+    "agent_id": "agent-d9",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "er-00006"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "the same order observed at both enforcement points",
+      "permitted": "send one order"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": false
+    },
+    "observation": {
+      "directness": "direct_observation",
+      "relationship": "direct",
+      "source": "gateway_proxy"
+    },
+    "provenance": [
+      "er-00006a"
+    ],
+    "reconciliation": {
+      "agent_claim": "agent sent one order to the counterparty",
+      "boundary_observation": "counterparty gateway logged the same order",
+      "state": "agreement"
+    },
+    "record_id": "er-00006",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-04T11:07:20Z",
+    "verification": {
+      "basis": "substrate_intercepted",
+      "basis_engines": [
+        "gateway_proxy",
+        "counterparty_gateway"
+      ],
+      "method": "intercepted",
+      "vantage": "substrate"
+    }
+  }
+}

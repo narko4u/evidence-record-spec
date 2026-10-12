@@ -108,6 +108,9 @@ def build_cases() -> list[tuple[str, dict, dict]]:
         ("e3-corroborated", sample("er-00005-e3-derived-reconstructed.json"),
          {"decision": "accepted", "derived_grade": "E3",
           "caps": ["e4_requires_timestamp_chain_link_and_independent_verifier"]}),
+        ("e3-corroborated-peer", sample("er-00006-e3-peer-corroboration.json"),
+         {"decision": "accepted", "derived_grade": "E3",
+          "caps": ["e4_requires_timestamp_chain_link_and_independent_verifier"]}),
         ("e4-anchored", sample("er-00003-e4-operationally-conformant.json"),
          {"decision": "accepted", "derived_grade": "E4"}),
     ]

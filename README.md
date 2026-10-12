@@ -81,13 +81,16 @@ record carries (discipline rule 1 in `VERIFIABILITY-OVERVIEW.md`).
 | `samples/er-00003-e4-operationally-conformant.json` | E4 | Anchored record, both claims, external verifier |
 | `samples/er-00004-e2-contradiction.json` | E2 | Agent claim contradicted by the deployment's own gateway |
 | `samples/er-00005-e3-derived-reconstructed.json` | E3 | Derived record with provenance, reconstructed method |
+| `samples/er-00006-e3-peer-corroboration.json` | E3 | Corroboration by the counterparty's own gateway, a PEER party |
 
 E3 requires corroboration by a party that is not the deployment itself. The
 deployment's own enforcement point is its own account, so a boundary record
 that contradicts the agent is E2 rather than E3, however damning it is: a party
 cannot corroborate itself. A count of engines it owns is not independence.
 Corroboration comes from Axis C custody, a PEER or an EXTERNAL party, never
-from how many engines are named.
+from how many engines are named. A PEER engine names the counterparty's own
+enforcement point, so the other side of an interaction can corroborate a
+record without an auditor, which is what `counterparty_gateway` does.
 
 ## Evidence Appraisal (verifier artifact)
 

@@ -2,7 +2,11 @@
   "schema_version": "0.1.0",
   "record_id": "er-00004",
   "agent_id": "agent-c2",
-  "actor_chain": ["human-owner", "agent-c2", "tool-ssh"],
+  "actor_chain": [
+    "human-owner",
+    "agent-c2",
+    "tool-ssh"
+  ],
   "timestamp": "2026-08-03T03:47:12Z",
   "observation": {
     "source": "gateway_proxy",
@@ -13,13 +17,16 @@
     "vantage": "substrate",
     "method": "intercepted",
     "basis": "substrate_intercepted",
-    "basis_engines": ["gateway_proxy"]
+    "basis_engines": [
+      "gateway_proxy"
+    ]
   },
-  "grade": "E3",
   "claims": [
     {
       "claim": "emission-conformant",
-      "evidence": ["er-00004"]
+      "evidence": [
+        "er-00004"
+      ]
     }
   ],
   "reconciliation": {

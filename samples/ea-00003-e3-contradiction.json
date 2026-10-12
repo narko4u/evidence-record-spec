@@ -3,10 +3,10 @@
   "appraisal_id": "ea-00003",
   "subject_record": {
     "record_id": "er-00004",
-    "digest": "2a9af62bddd1513f8cdaa3c7046e8b921e87f700caff67ca14cd0d174c2b7aa7"
+    "digest": "9bef2984e9893b820d7d7e311401a51693ec9d36d2bb1b4342cbd42548eb8d49"
   },
   "e_grade": "E3",
-  "claim_type": "operationally-conformant",
+  "claim_type": "emission-conformant",
   "reconciliation_state": "contradiction",
   "verifier_id": "verifier-beta",
   "timestamp": "2026-08-28T12:10:00+00:00",

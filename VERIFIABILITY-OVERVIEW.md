@@ -148,7 +148,13 @@ actually act on.
 
 1. **The label is an output of appraisal, not a field the producer stamps.**
    A verifier records the depth it actually checked, never a depth higher
-   than it executed.
+   than it executed. The validator enforces this by deriving a ceiling from the
+   record's own observation and refusing anything above it. The record carries
+   `observation.source`, `relationship`, `basis_engines` and
+   `reconciliation.state`, and those facts cap the rung, so a self-report cannot
+   be promoted by declaring its own integrity markers. A record cannot carry a
+   grade member at all, and an appraisal cannot conclude above the ceiling its
+   subject record supports.
 2. **Closed vocabulary, fail closed.** An unrecognised value is a failure,
    not a new rung. A typo cannot silently raise a record's strength.
 3. **Integrity markers record presence, not mechanism.** The schema says a

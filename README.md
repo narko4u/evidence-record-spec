@@ -225,6 +225,12 @@ Two ways to report it:
 - open an issue in this repository with the case list and the rungs you derived
 - run your own near-miss cases through this checker and send the results
 
+Related schemes grade the same records on a different axis.
+[`CROSSWALK.md`](CROSSWALK.md) states how the two kinds of grade relate. It
+carries no mapping table on purpose: derive your own and report it the same
+way, because a mapping asserted by the project that wrote one side of it is not
+checkable by the reader.
+
 Implementations we know about are listed in
 [`IMPLEMENTATIONS.md`](IMPLEMENTATIONS.md). Teams that want help integrating the
 format can ask Empire Labs Pty Ltd for a scoped engagement, which is a paid

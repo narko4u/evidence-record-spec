@@ -3,7 +3,7 @@
 # Copyright (c) 2026 Empire Labs Pty Ltd
 # SPDX-License-Identifier: Apache-2.0
 
-"""Appraise evidence records against the E0-E4 grade floor, and report the rung
+"""Appraise evidence records against the E0-E4 grade floor and report the rung
 each one reaches with a named reason.
 
 Standard library only: no install step, no network call, no account, no service.
@@ -69,7 +69,7 @@ def explain(record: dict) -> list[str]:
 
 
 def claim_floor_reasons(record: dict, derived: str) -> tuple[list[str], bool]:
-    """Reasons a claim is not supported, and whether the claim set is closed.
+    """Reasons a claim is not supported and whether the claim set is closed.
 
     The claim floor is what stops a producer asserting more than its own
     observation supports. Returning ``False`` for closure means an unrecognised
@@ -94,7 +94,7 @@ def claim_floor_reasons(record: dict, derived: str) -> tuple[list[str], bool]:
 
 
 def appraise(record: dict) -> dict:
-    """Appraise one record: the rung it reaches, and whether it may stand.
+    """Appraise one record: the rung it reaches and whether it may stand.
 
     Two different things are reported and they must not be conflated:
 

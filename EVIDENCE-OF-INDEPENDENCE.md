@@ -13,7 +13,7 @@ would use.
 The table below is a point-in-time snapshot and is refreshed on revision. It was
 last refreshed 2026-10-12, alongside the E3 corroboration revision: the rule
 that E3 requires corroboration by a party outside the deployment's own domain is
-now executable in `evidence_grade_rules.py`, and the one sample it moved
+now executable in `evidence_grade_rules.py` and the one sample it moved
 (`samples/er-00004-e2-contradiction.json`) kept its bytes, so its digest is
 unchanged from the previous refresh. Every entry below is recomputed and
 verified against the shipped bytes.
@@ -22,13 +22,13 @@ verified against the shipped bytes.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `137744067c4d17533f504a34236703e8c68b5cdc529ca1c0348d5845f1f54de4` |
+| README.md | `2e1618dd2ae277140a83dddb62e71453f2268009114433c77b4f9fd28fa7845d` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
 | validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |
-| evidence_grade_rules.py | `e3c743a8d234209d310741aea3d654796498c3e1617283991ba14b9d82f7ec31` |
-| grade_floor.py | `97d7e41144fc1f724fc57785ba7d8fcfbb64a44d23afeaf7adf102748a5d0e36` |
-| gen_cases.py | `02a651c3d8bc6dae86709cde522f90ed9007e45d511914cfed7db128733aeb83` |
+| evidence_grade_rules.py | `6d6b2929ae1d9d4b0e9e54f6fa06aafe9c015cf48d1fb1dade07ec42b934dc73` |
+| grade_floor.py | `c9bbefbc18892af3e523739e999250cc5095879432fe1a9475acc9c0fe64e4f0` |
+| gen_cases.py | `9dcbbd017db30bf5893a016690ae279954a2e81bbfc1796412022af5de685c95` |
 | samples/er-00001-e0-self-report.json | `acc3b72c46b52650ec4f31967872089e90440dae266a24aed52bba6e8dea441c` |
 | samples/er-00002-e2-emission-conformant.json | `7640db187fd130c446ddcb59c47554d1c1674572d19e51a844abb09ebd8142f4` |
 | samples/er-00003-e4-operationally-conformant.json | `72f2c233b71707098ed7e47f257432a9295e68c5142a51a8f015e693d136a129` |

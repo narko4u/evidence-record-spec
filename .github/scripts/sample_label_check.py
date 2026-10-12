@@ -8,7 +8,7 @@
 A sample file name states the rung the record's own observation supports, so a
 stale name is a published claim that the rule set contradicts. That is exactly
 what this gate exists to catch: the label and the rules must be derived from
-the same place, or a reader cannot trust either.
+the same place or a reader cannot trust either.
 
 An appraisal sample states the grade a verifier concluded, which must not be
 above the ceiling of the record it cites.

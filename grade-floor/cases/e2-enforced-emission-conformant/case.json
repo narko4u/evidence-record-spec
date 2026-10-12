@@ -2,7 +2,8 @@
   "case_id": "e2-enforced-emission-conformant",
   "expect": {
     "decision": "accepted",
-    "derived_grade": "E2"
+    "derived_grade": "E2",
+    "reason_contains": "grade_derived"
   },
   "record": {
     "actor_chain": [

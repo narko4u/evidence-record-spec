@@ -168,6 +168,36 @@ The appraisal path deliberately does **not** apply the claim floors: concluding
 a grade *below* a claim's floor is the point of appraisal. Flooring belongs to
 the producer's claim in the record layer.
 
+## Grade floor (runnable, no install)
+
+The rungs are the ladder. The floor is what each rung requires, and it is
+runnable as shipped:
+
+```bash
+python3 grade_floor.py grade-floor/cases/
+python3 grade_floor.py --json grade-floor/cases/   # one JSON object per case
+```
+
+`grade-floor/` holds one accepted case per rung, written by `gen_cases.py`. The
+expectations in it are authored from the rule text and never computed from the
+implementation, so the corpus is able to disagree with the runner and a
+disagreement is a finding rather than a nuisance. The floor derivation lives in
+`evidence_grade_rules.py`, which both `validate_evidence.py` and
+`grade_floor.py` import, so a checker and a validator cannot disagree about a
+rung. Exit code 0 means every case behaved as published.
+
+A refusal names the rule that refused it, for example
+`claim_floor_below_e3:operationally-conformant` or
+`unknown_observation_source`. Both entry points are standard library only: no
+install step, no network call, no account and no service.
+
+This repository ships the floor. Cases that probe the boundary between
+adjacent rungs are not published here.
+
+CI also runs a disclosure firewall
+(`.github/scripts/firewall_check.py`): this tree carries the format, never the
+mechanism that produces records at these grades.
+
 ## Scope boundary
 
 **This repo describes the record format only.** It does not describe:

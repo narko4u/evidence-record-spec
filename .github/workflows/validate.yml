@@ -27,6 +27,14 @@ jobs:
         run: python -m pip install --quiet --disable-pip-version-check pyyaml
       - name: Validate repository contents
         run: python3 .github/scripts/validate.py
+      - name: Disclosure firewall (public tree carries the format, never the mechanism)
+        run: python3 .github/scripts/firewall_check.py
+      - name: Grade floor corpus regenerates byte for byte
+        run: |
+          python3 gen_cases.py
+          git diff --exit-code -- grade-floor
+      - name: Grade floor corpus appraises as published
+        run: python3 grade_floor.py grade-floor/cases/
       - name: Check that linked repositories are public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

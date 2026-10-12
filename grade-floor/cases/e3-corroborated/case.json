@@ -10,52 +10,57 @@
   "record": {
     "actor_chain": [
       "human-owner",
-      "agent-a1",
-      "tool-http-post"
+      "agent-d9",
+      "tool-db-query"
     ],
-    "agent_id": "agent-a1",
+    "agent_id": "agent-d9",
     "claims": [
       {
         "claim": "emission-conformant",
         "evidence": [
-          "er-00002"
+          "er-00005",
+          "er-00005a",
+          "er-00005b"
         ]
       }
     ],
     "declared_vs_observed": {
-      "occurred": "one POST observed at gateway",
-      "permitted": "POST to api.example.com"
+      "occurred": "query observed in sensor logs (reconstructed)",
+      "permitted": "query customer table"
     },
     "integrity": {
       "chain_linked": true,
       "signed": true,
-      "timestamped": false
+      "timestamped": true
     },
     "observation": {
-      "directness": "direct_observation",
-      "relationship": "corroborating",
-      "source": "gateway_proxy"
+      "directness": "inferred",
+      "relationship": "derived",
+      "source": "security_sensor"
     },
-    "provenance": [],
+    "provenance": [
+      "er-00005a",
+      "er-00005b"
+    ],
     "reconciliation": {
-      "agent_claim": "agent called api.example.com once",
-      "boundary_observation": "gateway recorded one POST to api.example.com",
+      "agent_claim": "agent queried customer table",
+      "boundary_observation": "reconstructed from security sensor logs",
       "state": "agreement"
     },
-    "record_id": "er-00002",
+    "record_id": "er-00005",
     "sampling": {
       "audit_required": true,
       "sampled": false
     },
     "schema_version": "0.1.0",
-    "timestamp": "2026-08-01T09:15:03Z",
+    "timestamp": "2026-08-04T11:03:55Z",
     "verification": {
-      "basis": "substrate_intercepted",
+      "basis": "substrate_reconstructed",
       "basis_engines": [
-        "gateway_proxy",
-        "sandbox"
+        "security_sensor",
+        "external_authority"
       ],
-      "method": "intercepted",
+      "method": "reconstructed",
       "vantage": "substrate"
     }
   }

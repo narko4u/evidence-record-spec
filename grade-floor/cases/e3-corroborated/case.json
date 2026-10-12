@@ -1,0 +1,62 @@
+{
+  "case_id": "e3-corroborated",
+  "expect": {
+    "caps": [
+      "e4_requires_timestamp_chain_link_and_independent_verifier"
+    ],
+    "decision": "accepted",
+    "derived_grade": "E3"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-a1",
+      "tool-http-post"
+    ],
+    "agent_id": "agent-a1",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "er-00002"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "one POST observed at gateway",
+      "permitted": "POST to api.example.com"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": false
+    },
+    "observation": {
+      "directness": "direct_observation",
+      "relationship": "corroborating",
+      "source": "gateway_proxy"
+    },
+    "provenance": [],
+    "reconciliation": {
+      "agent_claim": "agent called api.example.com once",
+      "boundary_observation": "gateway recorded one POST to api.example.com",
+      "state": "agreement"
+    },
+    "record_id": "er-00002",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-01T09:15:03Z",
+    "verification": {
+      "basis": "substrate_intercepted",
+      "basis_engines": [
+        "gateway_proxy",
+        "sandbox"
+      ],
+      "method": "intercepted",
+      "vantage": "substrate"
+    }
+  }
+}

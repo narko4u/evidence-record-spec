@@ -1,0 +1,58 @@
+{
+  "case_id": "e2-enforced-emission-conformant",
+  "expect": {
+    "decision": "accepted",
+    "derived_grade": "E2"
+  },
+  "record": {
+    "actor_chain": [
+      "human-owner",
+      "agent-a1",
+      "tool-file-write"
+    ],
+    "agent_id": "agent-a1",
+    "claims": [
+      {
+        "claim": "emission-conformant",
+        "evidence": [
+          "gf-00005"
+        ]
+      }
+    ],
+    "declared_vs_observed": {
+      "occurred": "claimed by agent, not independently observed",
+      "permitted": "write /etc/app/config.json"
+    },
+    "integrity": {
+      "chain_linked": true,
+      "signed": true,
+      "timestamped": false
+    },
+    "observation": {
+      "directness": "direct_observation",
+      "relationship": "direct",
+      "source": "gateway_proxy"
+    },
+    "provenance": [],
+    "reconciliation": {
+      "agent_claim": "agent called api.example.com",
+      "boundary_observation": "",
+      "state": "agreement"
+    },
+    "record_id": "gf-00005",
+    "sampling": {
+      "audit_required": true,
+      "sampled": false
+    },
+    "schema_version": "0.1.0",
+    "timestamp": "2026-08-01T09:15:00Z",
+    "verification": {
+      "basis": "substrate_intercepted",
+      "basis_engines": [
+        "gateway_proxy"
+      ],
+      "method": "intercepted",
+      "vantage": "substrate"
+    }
+  }
+}

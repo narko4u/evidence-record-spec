@@ -1,0 +1,94 @@
+{
+  "cases": {
+    "e0-claims-emission-conformant": {
+      "decision": "rejected",
+      "derived_grade": "E0",
+      "reason_contains": "claim_floor_below_e1"
+    },
+    "e0-claims-operationally-conformant": {
+      "decision": "rejected",
+      "derived_grade": "E0",
+      "reason_contains": "claim_floor_below_e3"
+    },
+    "e0-declared": {
+      "caps": [
+        "no_independent_evidence_caps_at_e0",
+        "e3_requires_corroboration_beyond_the_actor"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E0"
+    },
+    "e1-observed": {
+      "caps": [
+        "e3_requires_corroboration_beyond_the_actor",
+        "e4_unreachable_for_this_observation_source"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E1"
+    },
+    "e2-enforced": {
+      "caps": [
+        "e3_requires_corroboration_beyond_the_actor"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E2"
+    },
+    "e2-enforced-emission-conformant": {
+      "decision": "accepted",
+      "derived_grade": "E2"
+    },
+    "e3-contradiction-claims-operationally-conformant": {
+      "decision": "rejected",
+      "derived_grade": "E3",
+      "reason_contains": "claim_requires_agreement"
+    },
+    "e3-contradiction-emission-conformant": {
+      "decision": "accepted",
+      "derived_grade": "E3"
+    },
+    "e3-corroborated": {
+      "caps": [
+        "e4_requires_timestamp_chain_link_and_independent_verifier"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E3"
+    },
+    "e3-corroboration-rests-on-self-report": {
+      "caps": [
+        "e3_requires_corroboration_beyond_the_actor"
+      ],
+      "decision": "rejected",
+      "derived_grade": "E2",
+      "reason_contains": "claim_floor_below_e3"
+    },
+    "e4-anchored": {
+      "decision": "accepted",
+      "derived_grade": "E4"
+    },
+    "e4-framework-declares-every-marker": {
+      "caps": [
+        "e4_unreachable_for_this_observation_source"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E1"
+    },
+    "e4-missing-chain-link": {
+      "caps": [
+        "e4_requires_timestamp_chain_link_and_independent_verifier"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E3"
+    },
+    "unknown-claim": {
+      "decision": "rejected",
+      "derived_grade": "E0",
+      "reason_contains": "unknown_claim"
+    },
+    "unknown-observation-source": {
+      "decision": "rejected",
+      "derived_grade": "E0",
+      "reason_contains": "unknown_observation_source"
+    }
+  },
+  "suite": "evidence-grade-floor/v1"
+}

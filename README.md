@@ -208,6 +208,28 @@ CI also runs a disclosure firewall
 (`.github/scripts/firewall_check.py`): this tree carries the format, never the
 mechanism that produces records at these grades.
 
+## Independent implementations
+
+The format is published so that it can be implemented by someone with no
+relationship to this project. Everything needed for that is in this tree: the
+two schemas, the floor corpus and the checker, all standard library only.
+
+If you implement the format, run the published corpus against your
+implementation and report the rungs you derive, including any case where you
+disagree with the expected rung. A disagreement that names the case and the
+reason is more useful to the format than agreement, because it is the only thing
+that tells us the rule text is ambiguous.
+
+Two ways to report it:
+
+- open an issue in this repository with the case list and the rungs you derived
+- run your own near-miss cases through this checker and send the results
+
+Implementations we know about are listed in
+[`IMPLEMENTATIONS.md`](IMPLEMENTATIONS.md). Teams that want help integrating the
+format can ask Empire Labs Pty Ltd for a scoped engagement, which is a paid
+route. The maintainers do not write a third party's implementation for them.
+
 ## Scope boundary
 
 **This repo describes the record format only.** It does not describe:

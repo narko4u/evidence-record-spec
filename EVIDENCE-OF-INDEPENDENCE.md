@@ -22,7 +22,7 @@ bytes. Every entry below is recomputed and verified against the shipped bytes.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `7f88358f36401c8255ef9c38a29e3c7f10e5c0c6df402183a2a70a9cad3cd8b9` |
+| README.md | `6d14062ccf77004c98ac28bdf264767fc0857faa63cefd9d124c643ced1162c0` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
 | validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |

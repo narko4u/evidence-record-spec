@@ -44,6 +44,13 @@
       "decision": "accepted",
       "derived_grade": "E3"
     },
+    "e3-corroborated-peer": {
+      "caps": [
+        "e4_requires_timestamp_chain_link_and_independent_verifier"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E3"
+    },
     "e4-anchored": {
       "decision": "accepted",
       "derived_grade": "E4"

@@ -77,6 +77,10 @@ ENGINE_SCOPE = {
     "operating_system": "SELF",
     "network_sensor": "SELF",
     "security_sensor": "SELF",
+    # The counterparty's own enforcement point. That is another party inside
+    # the agreement, so PEER custody rather than the deployment's own account
+    # (Axis C in VERIFIABILITY-OVERVIEW.md).
+    "counterparty_gateway": "PEER",
     "identity_provider": "EXTERNAL",
     "external_authority": "EXTERNAL",
 }

@@ -11,29 +11,30 @@ It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
 The table below is a point-in-time snapshot and is refreshed on revision. It was
-last refreshed 2026-10-12, alongside the E3 corroboration revision: the rule
-that E3 requires corroboration by a party outside the deployment's own domain is
-now executable in `evidence_grade_rules.py` and the one sample it moved
-(`samples/er-00004-e2-contradiction.json`) kept its bytes, so its digest is
-unchanged from the previous refresh. Every entry below is recomputed and
-verified against the shipped bytes.
+last refreshed 2026-10-13, alongside the PEER custody revision: the rule that a
+record reaches E3 on corroboration by a party other than the deployment now has
+a named engine for the peer class (`counterparty_gateway`), which the rule set
+grades as PEER under Axis C. One sample was added
+(`samples/er-00006-e3-peer-corroboration.json`) and no existing sample changed
+bytes. Every entry below is recomputed and verified against the shipped bytes.
 
-## 1. Files covered (SHA-256, as of 2026-10-12)
+## 1. Files covered (SHA-256, as of 2026-10-13)
 
 | File | SHA-256 |
 |---|---|
-| README.md | `2e1618dd2ae277140a83dddb62e71453f2268009114433c77b4f9fd28fa7845d` |
+| README.md | `7f88358f36401c8255ef9c38a29e3c7f10e5c0c6df402183a2a70a9cad3cd8b9` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
 | validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |
-| evidence_grade_rules.py | `6d6b2929ae1d9d4b0e9e54f6fa06aafe9c015cf48d1fb1dade07ec42b934dc73` |
+| evidence_grade_rules.py | `c88250e2ddf2e68569fafa5c13123613be289810a9ef50732b72be50a0f4d4d2` |
 | grade_floor.py | `c9bbefbc18892af3e523739e999250cc5095879432fe1a9475acc9c0fe64e4f0` |
-| gen_cases.py | `9dcbbd017db30bf5893a016690ae279954a2e81bbfc1796412022af5de685c95` |
+| gen_cases.py | `a83325be6a9691e7c2c5ee6d857123c4fbfc516e9eaca85b6f5998584e97babc` |
 | samples/er-00001-e0-self-report.json | `acc3b72c46b52650ec4f31967872089e90440dae266a24aed52bba6e8dea441c` |
 | samples/er-00002-e2-emission-conformant.json | `7640db187fd130c446ddcb59c47554d1c1674572d19e51a844abb09ebd8142f4` |
 | samples/er-00003-e4-operationally-conformant.json | `72f2c233b71707098ed7e47f257432a9295e68c5142a51a8f015e693d136a129` |
 | samples/er-00004-e2-contradiction.json | `a8b60cd6364910fdbc0326840af96f6c36abec74f54819cbfb3cab54a33789b0` |
 | samples/er-00005-e3-derived-reconstructed.json | `8c6a35eaad22370008df4be92c9c82b94ddade42a468dd096346bcf6a8f6cd5d` |
+| samples/er-00006-e3-peer-corroboration.json | `e0f949cd4682313c96fd3134958efc1284b5f4c103caaa33d3bf0f8143348788` |
 | AAIF-SUBMISSION-DRAFT.md | `ff84a37b12bc108aa315270c35dcfa01125a160f4eee0f2ad83dcb7af3d33c00` |
 
 ## 2. Similarity audit (run 2026-08-29, vs the reference implementation on disk)
@@ -65,6 +66,9 @@ README "Independent implementation notice".
 - 2026-08-29: repository authored in a private local workspace
 - Commit d762c59: schema + validator + samples + README + submission draft
 - Commit d87d670: independent implementation notice added
+- 2026-10-13: PEER custody class added to the rule set (`counterparty_gateway`),
+  with one new sample and two held discriminators, the peer case that must reach
+  E3 and its twin, an engine name outside the vocabulary, that must not
 - Author identity: narko4u <narko4u@users.noreply.github.com>, DCO signed
 
 ## 5. Storage locations of this record

@@ -79,8 +79,15 @@ record carries (discipline rule 1 in `VERIFIABILITY-OVERVIEW.md`).
 | `samples/er-00001-e0-self-report.json` | E0 | Self-report with no independent evidence |
 | `samples/er-00002-e2-emission-conformant.json` | E2 | Gateway corroboration, emission-conformant claim |
 | `samples/er-00003-e4-operationally-conformant.json` | E4 | Anchored record, both claims, external verifier |
-| `samples/er-00004-e3-contradiction.json` | E3 | Agent claim contradicted by gateway observation |
+| `samples/er-00004-e2-contradiction.json` | E2 | Agent claim contradicted by the deployment's own gateway |
 | `samples/er-00005-e3-derived-reconstructed.json` | E3 | Derived record with provenance, reconstructed method |
+
+E3 requires corroboration by a party that is not the deployment itself. The
+deployment's own enforcement point is its own account, so a boundary record
+that contradicts the agent is E2 rather than E3, however damning it is: a party
+cannot corroborate itself, and a count of engines it owns is not independence.
+Corroboration comes from Axis C custody, a PEER or an EXTERNAL party, never
+from how many engines are named.
 
 ## Evidence Appraisal (verifier artifact)
 
@@ -93,7 +100,7 @@ evidence record and the grade it concluded:
 |---|---|---|---|
 | `samples/ea-00001-e4-agreement.json` | er-00003 | E4 | Verifier confirms the E4 record, agreement |
 | `samples/ea-00002-e0-no-independent-evidence.json` | er-00001 | E0 | Self-report appraised honestly, no independent evidence |
-| `samples/ea-00003-e3-contradiction.json` | er-00004 | E3 | Verifier finds agent claim contradicted |
+| `samples/ea-00003-e2-contradiction.json` | er-00004 | E2 | Verifier finds agent claim contradicted |
 
 Schema: `evidence-appraisal-0.1.schema.json`. The appraisal cites its subject
 by typed digest (`subject_record.digest`, bare 64-char lowercase hex = SHA-256

@@ -2,7 +2,7 @@
   "case_id": "e1-observed",
   "expect": {
     "caps": [
-      "e3_requires_corroboration_beyond_the_actor",
+      "e3_requires_an_independent_party",
       "e4_unreachable_for_this_observation_source"
     ],
     "decision": "accepted",

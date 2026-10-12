@@ -3,22 +3,31 @@
     "e0-declared": {
       "caps": [
         "no_independent_evidence_caps_at_e0",
-        "e3_requires_corroboration_beyond_the_actor"
+        "e3_requires_an_independent_party",
+        "e4_unreachable_for_this_observation_source"
       ],
       "decision": "accepted",
       "derived_grade": "E0"
     },
     "e1-observed": {
       "caps": [
-        "e3_requires_corroboration_beyond_the_actor",
+        "e3_requires_an_independent_party",
         "e4_unreachable_for_this_observation_source"
       ],
       "decision": "accepted",
       "derived_grade": "E1"
     },
+    "e2-contradiction-not-corroboration": {
+      "caps": [
+        "e3_requires_an_independent_party"
+      ],
+      "decision": "accepted",
+      "derived_grade": "E2"
+    },
     "e2-enforced": {
       "caps": [
-        "e3_requires_corroboration_beyond_the_actor"
+        "e3_requires_an_independent_party",
+        "e4_requires_timestamp_chain_link_and_independent_verifier"
       ],
       "decision": "accepted",
       "derived_grade": "E2"

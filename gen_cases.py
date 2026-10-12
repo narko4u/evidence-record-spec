@@ -73,18 +73,38 @@ def boundary_observed() -> dict:
     return rec
 
 
+def contradiction_observed() -> dict:
+    """A boundary record that contradicts the agent, with no outside party.
+
+    Still E2: the enforcement point is the deployment's own account, so nothing
+    independent has agreed with it. A disagreement is not corroboration either.
+    """
+    rec = sample("er-00004-e2-contradiction.json")
+    rec["record_id"] = "gf-00006"
+    rec["claims"] = []
+    return rec
+
+
 def build_cases() -> list[tuple[str, dict, dict]]:
     return [
         ("e0-declared", sample("er-00001-e0-self-report.json"),
          {"decision": "accepted", "derived_grade": "E0",
-          "caps": ["no_independent_evidence_caps_at_e0", "e3_requires_corroboration_beyond_the_actor"]}),
+          "caps": ["no_independent_evidence_caps_at_e0",
+                   "e3_requires_an_independent_party",
+                   "e4_unreachable_for_this_observation_source"]}),
         ("e1-observed", framework_observed(),
          {"decision": "accepted", "derived_grade": "E1",
-          "caps": ["e3_requires_corroboration_beyond_the_actor", "e4_unreachable_for_this_observation_source"]}),
+          "caps": ["e3_requires_an_independent_party",
+                   "e4_unreachable_for_this_observation_source"]}),
         ("e2-enforced", boundary_observed(),
-         {"decision": "accepted", "derived_grade": "E2", "caps": ["e3_requires_corroboration_beyond_the_actor"]}),
+         {"decision": "accepted", "derived_grade": "E2",
+          "caps": ["e3_requires_an_independent_party",
+                   "e4_requires_timestamp_chain_link_and_independent_verifier"]}),
         ("e2-enforced-emission-conformant", with_claim(boundary_observed(), "emission-conformant"),
          {"decision": "accepted", "derived_grade": "E2", "reason_contains": "grade_derived"}),
+        ("e2-contradiction-not-corroboration", with_claim(contradiction_observed(), "emission-conformant"),
+         {"decision": "accepted", "derived_grade": "E2",
+          "caps": ["e3_requires_an_independent_party"]}),
         ("e3-corroborated", sample("er-00005-e3-derived-reconstructed.json"),
          {"decision": "accepted", "derived_grade": "E3",
           "caps": ["e4_requires_timestamp_chain_link_and_independent_verifier"]}),

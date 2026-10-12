@@ -2,7 +2,8 @@
   "case_id": "e2-enforced",
   "expect": {
     "caps": [
-      "e3_requires_corroboration_beyond_the_actor"
+      "e3_requires_an_independent_party",
+      "e4_requires_timestamp_chain_link_and_independent_verifier"
     ],
     "decision": "accepted",
     "derived_grade": "E2"

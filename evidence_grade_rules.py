@@ -3,33 +3,35 @@
 # Copyright (c) 2026 Empire Labs Pty Ltd
 # SPDX-License-Identifier: Apache-2.0
 
-"""The grade floor, as one rule set with no third-party imports.
+"""The E0-E4 grade floor, as one rule set with no third-party imports.
 
-This module holds the derivation that both entry points share:
+This module is the single definition of how a rung is derived. Both
+``validate_evidence.py`` and ``grade_floor.py`` import it, so a validator and a
+checker cannot disagree about a rung.
 
-  - ``validate_evidence.py`` uses it to cap a record's claim against its own
-    observation.
-  - ``grade_floor.py`` uses it to appraise a corpus of records and report the
-    rung each one reaches.
+The rungs are the published ladder in ``VERIFIABILITY-OVERVIEW.md``:
 
-There is exactly one definition of the floor. A checker and a validator that
-disagree about a rung make the rung meaningless, so the rules are not
-reimplemented anywhere else.
+    E0 Declared      agent self-report, no independent verification
+    E1 Observed      behavior observed by framework/gateway
+    E2 Enforced      policy enforced at the boundary, denied actions recorded
+    E3 Corroborated  multiple independent sources agree
+    E4 Anchored      external timestamping, chain-linking, independent
+                     verifiability
 
-The floor is DERIVED from the record. It is never read from the record, and a
-value the producer declares never raises it.
+E3 is the rung this module is strict about. "Corroborated" means corroboration
+by a party that is not the deployment itself, which is the custody question
+Axis C of the overview answers. A record is always the deployment's own
+account of itself, so counting engine names is not enough: two engines from the
+same deployment are one party agreeing with itself. Independence is decided by
+the custody class of the engine, never by how many engines are listed.
 """
+from __future__ import annotations
 
 GRADE_ORDER = ["E0", "E1", "E2", "E3", "E4"]
 
-# What an observation source can support at most, on its own, before the
-# corroboration and anchoring gates are applied.
-#
-#   E0  the actor's own account, nothing more
-#   E1  observed by the framework hosting the agent, with no boundary or
-#       external corroboration
-#   E4  a boundary, sensor or external authority. The gates below then decide
-#       how much of that headroom the record actually earns.
+# Axis A: the strongest rung a source can support on its own. Gates below can
+# only lower this, never raise it, so a producer cannot promote its own basis
+# by assertion.
 GRADE_BASE_BY_SOURCE = {
     "agent_self_report": "E0",
     "framework": "E1",
@@ -52,12 +54,109 @@ CLAIM_MIN_GRADE = {
     "operationally-conformant": "E3",
 }
 
-# engine name meaning "the actor told us so", which is not corroboration
+# Engine name meaning "the actor told us so", which is not corroboration.
 SELF_REPORT_ENGINE = "self_report"
+
+# Axis C custody: which party is able to produce each engine's account.
+#
+#   SELF      the deployment's own account, its enforcement point or its own
+#             instrumentation. The deployment can bring itself into agreement,
+#             so SELF is solitude, not corroboration.
+#   PEER      another party inside the agreement: a counterparty, or a peer
+#             mediating the same interaction.
+#   EXTERNAL  a party outside the trust domain: an auditor, a regulator, a
+#             payment processor, or any non-trusting third party.
+#
+# Fail closed: an engine that is not listed here is unknown, and an unknown
+# engine is never treated as independent.
+ENGINE_SCOPE = {
+    "self_report": "SELF",
+    "framework": "SELF",
+    "gateway_proxy": "SELF",
+    "sandbox": "SELF",
+    "operating_system": "SELF",
+    "network_sensor": "SELF",
+    "security_sensor": "SELF",
+    "identity_provider": "EXTERNAL",
+    "external_authority": "EXTERNAL",
+}
+
+# Scopes that can corroborate a deployment's account of itself.
+INDEPENDENT_SCOPES = {"PEER", "EXTERNAL"}
+
+# Gate names, in the order they are applied.
+GATE_UNKNOWN_SOURCE = "unknown_source"
+GATE_NO_INDEPENDENT_EVIDENCE = "no_independent_evidence"
+GATE_NO_INDEPENDENT_PARTY = "no_independent_party"
+GATE_NOT_ANCHORABLE = "not_anchorable"
+GATE_SOURCE_NOT_ANCHORABLE = "source_not_anchorable"
+
+# The rung each gate caps a record at, whatever its source allows.
+GATE_CEILING = {
+    GATE_UNKNOWN_SOURCE: "E0",
+    GATE_NO_INDEPENDENT_EVIDENCE: "E0",
+    GATE_NO_INDEPENDENT_PARTY: "E2",
+    GATE_NOT_ANCHORABLE: "E3",
+    GATE_SOURCE_NOT_ANCHORABLE: "E3",
+}
 
 
 def min_grade(a: str, b: str) -> str:
     return a if GRADE_ORDER.index(a) <= GRADE_ORDER.index(b) else b
+
+
+def engine_scope(engine: str) -> str | None:
+    """The custody class of an engine, or None when the name is not known."""
+    return ENGINE_SCOPE.get(engine)
+
+
+def independent_engines(record: dict) -> list[str]:
+    """The engines behind a record whose party is not the deployment itself."""
+    ver = record.get("verification") or {}
+    engines = [e for e in (ver.get("basis_engines") or []) if isinstance(e, str)]
+    src = str((record.get("observation") or {}).get("source") or "")
+    if src and src not in engines:
+        engines.append(src)
+    return sorted({e for e in engines if engine_scope(e) in INDEPENDENT_SCOPES})
+
+
+def grade_gates(record: dict) -> list[str]:
+    """The gates that actually bite, in the order they are applied.
+
+    Computed once, here, so the derivation and any explanation of it cannot
+    drift apart.
+    """
+    obs = record.get("observation") or {}
+    ver = record.get("verification") or {}
+    rec = record.get("reconciliation") or {}
+    integrity = record.get("integrity") or {}
+    gates: list[str] = []
+
+    source = str(obs.get("source") or "")
+    if source not in GRADE_BASE_BY_SOURCE:
+        gates.append(GATE_UNKNOWN_SOURCE)
+
+    if rec.get("state") == "no_independent_evidence":
+        gates.append(GATE_NO_INDEPENDENT_EVIDENCE)
+
+    # E3 requires an independent party, decided by custody and not by count.
+    if not independent_engines(record):
+        gates.append(GATE_NO_INDEPENDENT_PARTY)
+
+    # E4 requires an anchorable origin plus every anchoring marker present.
+    verifiable_by = [v for v in (integrity.get("verifiable_by") or []) if isinstance(v, str)]
+    independent_verifier = [v for v in verifiable_by if v and v != record.get("agent_id")]
+    if not (
+        bool(integrity.get("timestamped"))
+        and bool(integrity.get("chain_linked"))
+        and bool(independent_verifier)
+    ):
+        if source in NON_ANCHORABLE_SOURCES:
+            gates.append(GATE_SOURCE_NOT_ANCHORABLE)
+        else:
+            gates.append(GATE_NOT_ANCHORABLE)
+
+    return gates
 
 
 def derive_grade_ceiling(record: dict) -> str:
@@ -66,45 +165,8 @@ def derive_grade_ceiling(record: dict) -> str:
     Derived, never read from the record. Returns one of E0..E4.
     """
     obs = record.get("observation") or {}
-    ver = record.get("verification") or {}
-    rec = record.get("reconciliation") or {}
-    integrity = record.get("integrity") or {}
-
     source = str(obs.get("source") or "")
     ceiling = GRADE_BASE_BY_SOURCE.get(source, "E0")
-
-    # No independent evidence is exactly a self-report: it caps at E0 whatever
-    # else the record claims.
-    if rec.get("state") == "no_independent_evidence":
-        ceiling = min_grade(ceiling, "E0")
-
-    # E3 requires corroboration by something other than the actor.
-    engines = [e for e in (ver.get("basis_engines") or []) if isinstance(e, str)]
-    distinct = sorted(set(engines))
-    rests_on_self_report = any(e == SELF_REPORT_ENGINE for e in distinct)
-    boundary = str(rec.get("boundary_observation") or "").strip()
-    relationship = obs.get("relationship")
-    corroborated = (
-        not rests_on_self_report
-        and (
-            len(distinct) >= 2
-            or (relationship in ("corroborating", "contradictory") and bool(boundary))
-        )
-    )
-    if not corroborated:
-        ceiling = min_grade(ceiling, "E2")
-
-    # E4 requires an anchorable origin plus every anchoring marker actually
-    # present. Markers can only gate E4; they never raise anything below it.
-    verifiable_by = [v for v in (integrity.get("verifiable_by") or []) if isinstance(v, str)]
-    independent_verifier = [v for v in verifiable_by if v and v != record.get("agent_id")]
-    anchorable = (
-        source not in NON_ANCHORABLE_SOURCES
-        and bool(integrity.get("timestamped"))
-        and bool(integrity.get("chain_linked"))
-        and bool(independent_verifier)
-    )
-    if not anchorable:
-        ceiling = min_grade(ceiling, "E3")
-
+    for gate in grade_gates(record):
+        ceiling = min_grade(ceiling, GATE_CEILING[gate])
     return ceiling

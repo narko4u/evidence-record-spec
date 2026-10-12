@@ -29,6 +29,8 @@ jobs:
         run: python3 .github/scripts/validate.py
       - name: Disclosure firewall (public tree carries the format, never the mechanism)
         run: python3 .github/scripts/firewall_check.py
+      - name: Every sample label agrees with the rules that grade it
+        run: python3 .github/scripts/sample_label_check.py
       - name: Grade floor corpus regenerates byte for byte
         run: |
           python3 gen_cases.py

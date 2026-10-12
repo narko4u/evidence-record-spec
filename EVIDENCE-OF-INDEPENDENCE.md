@@ -13,7 +13,7 @@ would use.
 The table below is a point-in-time snapshot and is refreshed on revision. It was
 last refreshed 2026-10-12, alongside the E3 corroboration revision: the rule
 that E3 requires corroboration by a party outside the deployment's own domain is
-now executable in `evidence_grade_rules.py`, and the one sample it moved
+now executable in `evidence_grade_rules.py` and the one sample it moved
 (`samples/er-00004-e2-contradiction.json`) kept its bytes, so its digest is
 unchanged from the previous refresh. Every entry below is recomputed and
 verified against the shipped bytes.
@@ -22,7 +22,7 @@ verified against the shipped bytes.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `137744067c4d17533f504a34236703e8c68b5cdc529ca1c0348d5845f1f54de4` |
+| README.md | `2e1618dd2ae277140a83dddb62e71453f2268009114433c77b4f9fd28fa7845d` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
 | validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |

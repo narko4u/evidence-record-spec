@@ -85,7 +85,7 @@ record carries (discipline rule 1 in `VERIFIABILITY-OVERVIEW.md`).
 E3 requires corroboration by a party that is not the deployment itself. The
 deployment's own enforcement point is its own account, so a boundary record
 that contradicts the agent is E2 rather than E3, however damning it is: a party
-cannot corroborate itself, and a count of engines it owns is not independence.
+cannot corroborate itself. A count of engines it owns is not independence.
 Corroboration comes from Axis C custody, a PEER or an EXTERNAL party, never
 from how many engines are named.
 

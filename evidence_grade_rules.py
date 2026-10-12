@@ -62,12 +62,12 @@ SELF_REPORT_ENGINE = "self_report"
 #   SELF      the deployment's own account, its enforcement point or its own
 #             instrumentation. The deployment can bring itself into agreement,
 #             so SELF is solitude, not corroboration.
-#   PEER      another party inside the agreement: a counterparty, or a peer
+#   PEER      another party inside the agreement: a counterparty or a peer
 #             mediating the same interaction.
 #   EXTERNAL  a party outside the trust domain: an auditor, a regulator, a
-#             payment processor, or any non-trusting third party.
+#             payment processor or any non-trusting third party.
 #
-# Fail closed: an engine that is not listed here is unknown, and an unknown
+# Fail closed: an engine that is not listed here is unknown and an unknown
 # engine is never treated as independent.
 ENGINE_SCOPE = {
     "self_report": "SELF",
@@ -106,7 +106,7 @@ def min_grade(a: str, b: str) -> str:
 
 
 def engine_scope(engine: str) -> str | None:
-    """The custody class of an engine, or None when the name is not known."""
+    """The custody class of an engine or None when the name is not known."""
     return ENGINE_SCOPE.get(engine)
 
 

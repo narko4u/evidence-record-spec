@@ -10,7 +10,7 @@ Expectations are authored here from the rule text, never computed from the
 implementation, so the corpus can disagree with the runner and that disagreement
 is the point. Re-running rewrites every case byte for byte.
 
-This repository ships the floor: one accepted case for each rung, and a claim
+This repository ships the floor: one accepted case for each rung and a claim
 carried at a rung that supports it. The near-miss cases that decide where the
 line falls between adjacent rungs are held outside this repository on purpose,
 so the published set describes what each rung means without publishing the edge

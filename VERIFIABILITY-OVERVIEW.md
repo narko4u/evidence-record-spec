@@ -149,13 +149,27 @@ of an independent custodian.
 Axes A and B compose into a grade used to state, in one label, how anchored
 the evidence is:
 
-| Grade | Name | What it means | Minimum integrity markers |
+| Grade | Name | What it means | What the derivation reads |
 |---|---|---|---|
-| E0 | Declared | agent self-report, no independent verification | none |
-| E1 | Observed | behavior observed by framework/gateway | signed |
-| E2 | Enforced | policy enforced at the boundary, denied actions recorded | signed + chained |
-| E3 | Corroborated | corroboration by a party that is not the deployment, at PEER or EXTERNAL custody | signed + chained + timestamped |
-| E4 | Anchored | external timestamping, chain-linking, independent verifiability | all of E3 + verifier identifiers |
+| E0 | Declared | agent self-report, no independent verification | `observation.source` is the agent's own account |
+| E1 | Observed | the action observed outside the acting agent | a source outside the agent, with gaps still possible |
+| E2 | Enforced | a boundary component of the deployment recorded the action | `observation.source` names a boundary component of the deployment |
+| E3 | Corroborated | corroboration by a party that is not the deployment, at PEER or EXTERNAL custody | an engine in Axis C custody, at PEER or EXTERNAL |
+| E4 | Anchored | external timestamping, chain-linking, independent verifiability | E3 custody, plus `timestamped`, `chain_linked` and a verifier other than the agent |
+
+**Integrity markers do not cap a rung from E0 to E3.** They record presence,
+not mechanism (discipline rule 3) and the derivation reads `timestamped` and
+`chain_linked` only for the E4 anchor gate. `signed` is descriptive today and is
+read by nothing, so an unsigned record can reach E3 when its corroboration
+holds. E4 is the one rung whose markers are constitutive, because an anchor that
+is neither timestamped nor chained is not an anchor.
+
+**E2 is bounded by what the format carries.** A record names the party that made
+the observation. It carries no field for the route an action took, so an E2 here
+says that a boundary component of the deployment recorded the action. It does
+not say the action had no other route. A deployment that can demonstrate the
+route holds stronger evidence than this format can express. The difference
+is recorded as an open item below.
 
 ### Receipt claims: emission-conformant and operationally-conformant
 
@@ -232,6 +246,12 @@ evidence-graded envelope without a new format.
    granularity, or should either axis collapse into the other?
 4. Which parts of the validator (if any) would the WG want to adopt as a
    shared testbed for the capsule work?
+5. Should the format carry the route an action took? E2 rests on the party that
+   observed rather than on the path taken, because no field carries
+   reachability.
+6. Should the derivation read `declared_vs_observed`? A record whose permitted
+   action and observed occurrence disagree derives the same rung as one where
+   they agree, because the field is carried and never read.
 
 ## Suggested next steps
 

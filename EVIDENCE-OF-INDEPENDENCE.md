@@ -18,7 +18,10 @@ rule set grades as PEER under Axis C. It added one sample
 (`samples/er-00006-e3-peer-corroboration.json`). The crosswalk publication added
 `CROSSWALK.md` and extended the covered set to the appraisal samples, the
 appraisal schema and both notice files. The corpus is now pinned as one digest
-over its sorted member list.
+over its sorted member list. A third change the same day published the
+definition of an independent party under Axis C in `VERIFIABILITY-OVERVIEW.md`,
+replaced the count-based E3 row with the custody-based one and added discipline
+rule 5.
 
 The refresh is no longer a matter of trust.
 `.github/scripts/check_pinned_digests.py` recomputes every row below from the
@@ -29,9 +32,9 @@ stale behind a commit again.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `779cb18a9be98b153fb53a20ea88896c03c2a6ec44a12c2666a233d4c0021064` |
+| README.md | `7be60244f939b9cb37a2a077cc9b2138d7f215d0e62ad95fcc655e139b805b33` |
 | CROSSWALK.md | `5d85b8b9288751fa1e9fa0323ebcc3cbb49924f0ac984f62156b1f4c0e98bbaf` |
-| VERIFIABILITY-OVERVIEW.md | `b2471835db6fdfa00cf321c93189f05d5acf95fea184ef1fb530ab5b8f7054ce` |
+| VERIFIABILITY-OVERVIEW.md | `ad3c363a153c4f959f256cb251e028a82f8bdcdb472e66fb22c5fca375d1f732` |
 | IMPLEMENTATIONS.md | `9826bb58becc79e85bc94305c2f655ab28e0e69d4450bfbeb060962e0a46c4c5` |
 | AAIF-SUBMISSION-DRAFT.md | `ff84a37b12bc108aa315270c35dcfa01125a160f4eee0f2ad83dcb7af3d33c00` |
 | NOTICE | `7070e13284e6402e0dd409cce60b2115b0a51ef50994772e08031e18521494ec` |

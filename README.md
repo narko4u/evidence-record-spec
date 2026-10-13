@@ -92,6 +92,10 @@ from how many engines are named. A PEER engine names the counterparty's own
 enforcement point, so the other side of an interaction can corroborate a
 record without an auditor, which is what `counterparty_gateway` does.
 
+The disqualifiers and the cases where a named party is still the deployment
+are stated in
+[`VERIFIABILITY-OVERVIEW.md`](VERIFIABILITY-OVERVIEW.md#what-makes-a-party-independent).
+
 ## Evidence Appraisal (verifier artifact)
 
 The E-grade is an **output of appraisal**, not a field the producer stamps

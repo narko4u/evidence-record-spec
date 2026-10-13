@@ -11,7 +11,7 @@ It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
 The table below is a point-in-time snapshot and is refreshed on revision. It was
-last refreshed 2026-10-13, on two changes. The PEER custody revision gave the
+last refreshed 2026-10-13, on five changes. The PEER custody revision gave the
 rule that a record reaches E3 on corroboration by a party other than the
 deployment a named engine for the peer class (`counterparty_gateway`), which the
 rule set grades as PEER under Axis C. It added one sample
@@ -25,7 +25,9 @@ rule 5. A fourth change the same day bounded E2 by what the format carries and
 replaced the integrity-marker column, after a reported corpus run disagreed with
 the derivation on three E2 cases and named two shipped cases that contradicted
 the marker column. The disagreement is recorded as open items in the overview
-rather than settled in a thread.
+rather than settled in a thread. A fifth change the same day added a naming table
+to `README.md` so a reader can tell a rung from a case id, a record id, a sample
+id and a claim name without inferring any of the four from its shape.
 
 The refresh is no longer a matter of trust.
 `.github/scripts/check_pinned_digests.py` recomputes every row below from the
@@ -36,7 +38,7 @@ stale behind a commit again.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `7be60244f939b9cb37a2a077cc9b2138d7f215d0e62ad95fcc655e139b805b33` |
+| README.md | `094da133b3905d3b199869fb1faaf932d389def844b23e947da9d4a3e5f75ea3` |
 | CROSSWALK.md | `5d85b8b9288751fa1e9fa0323ebcc3cbb49924f0ac984f62156b1f4c0e98bbaf` |
 | VERIFIABILITY-OVERVIEW.md | `7ee645198c560341edb168ad472406c151eff07d4ac1db5636a02c07c7916e65` |
 | IMPLEMENTATIONS.md | `9826bb58becc79e85bc94305c2f655ab28e0e69d4450bfbeb060962e0a46c4c5` |

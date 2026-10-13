@@ -13,14 +13,14 @@ spec proposal), public artifact https://github.com/narko4u/evidence-record-spec
 The evidence record spec is a vendor-neutral data model for labelling and
 comparing evidence about what an agent actually did. The point is not a new
 format, it is a shared vocabulary: how independently was the evidence
-obtained, at what vantage, and what does the record claim about the action.
+obtained, at what vantage and what does the record claim about the action.
 It was written to give the E4 use case (tamper-evident evidence for audit and
-dispute) a testable answer, and it is deliberately implementation-free so any
+dispute) a testable answer. It is deliberately implementation-free so any
 group can adopt the model without adopting our stack.
 
 ## Why this matters
 
-E4 names the gap: vendor traces are mutable and vendor-specific, and there is
+E4 names the gap: vendor traces are mutable and vendor-specific; there is
 no standard for tamper-evident agent evidence. Two systems can both claim to
 have "evidence" of an agent action; one is the agent's own self-report, the
 other is a gateway record the agent cannot rewrite. They carry very different
@@ -32,16 +32,16 @@ gives implementers a target for what verification must mean at each layer.
 
 ### Axis A: observation source and relationship
 
-Where did the evidence come from, and what does it claim about the action?
+Where did the evidence come from and what does it claim about the action?
 
 1. **Source**: agent self-report, framework, gateway/proxy, identity provider,
    sandbox, operating system, network sensor, security sensor, external
    authority. This is the AAIF "source and trust" distinction: separating
    agent self-reporting from boundary or external evidence.
-2. **Relationship**: direct, corroborating, contradictory, or derived. A
-   gateway record can agree with an agent self-report, contradict it, or have
+2. **Relationship**: direct, corroborating, contradictory or derived. A
+   gateway record can agree with an agent self-report, contradict it or have
    no bearing on it.
-3. **Reconciliation**: three states, not two. Agreement, contradiction, or the
+3. **Reconciliation**: three states, not two. Agreement, contradiction or the
    explicit absence of independent evidence. The no-independent-evidence state
    is a real audit finding, not a silent default.
 
@@ -62,7 +62,7 @@ How strong is the evidence, independent of where it came from?
 
 ### Axis C: witness_scope
 
-Who is able to produce the record at all, and can the deployment bring that
+Who is able to produce the record at all and can the deployment bring that
 party into agreement with itself?
 
 The two axes above describe how evidence was obtained and how strong it is.
@@ -72,13 +72,13 @@ strongly obtained and still held only by the party it describes.
 | Scope | Who can observe satisfaction | Evidence comes from |
 |---|---|---|
 | SELF | The deployment's own reports; the enforcement point is the only party able to produce the evidence | The deployment's own account, with no external path |
-| PEER | Another party within an agreement: a counterparty, a peer mediating the same interaction, or a tenant | Artifacts exchanged within the agreement |
-| EXTERNAL | A party outside the trust domain: an auditor, a regulator, or any non-trusting third party | Artifacts obtainable and checkable without cooperation from the enforcement point |
+| PEER | Another party within an agreement: a counterparty, a peer mediating the same interaction or a tenant | Artifacts exchanged within the agreement |
+| EXTERNAL | A party outside the trust domain: an auditor, a regulator or any non-trusting third party | Artifacts obtainable and checkable without cooperation from the enforcement point |
 
 **Assignment rule.** A requirement is SELF-scope unless a concrete artifact
 path exists that lets the named witness check it without relying on the
 enforcement point's own account. Most enforcement requirements are SELF-only
-under current wire formats. That is a finding, not a failure, and it is
+under current wire formats. That is a finding, not a failure. It is
 recorded as such.
 
 **Scope is orthogonal to the strength grade.** A record held by an EXTERNAL
@@ -112,15 +112,15 @@ snake_case (`verification_basis`, `evidence_refs`, `verifier_signature` and
 Our spelling is `witness_scope`, matching the snake_case field names it was
 first written among. The camelCase token `witnessScope` also exists as a term
 of art in an unrelated protocol, where it names a transaction witness's
-verification scope, and it appears as a field name in one public evidence
+verification scope and appears as a field name in one public evidence
 corpus. Neither of those is this. This document defines the grading, not the
-spelling, and the uses are unrelated. Cite the definition rather than a token.
+spelling. The uses are unrelated. Cite the definition rather than a token.
 
 ### What makes a party independent
 
 E3 rests on a party that is not the deployment, so the definition of an
 independent party carries the rung. Custody decides it, never count. The
-custody classes are the three in Axis C above and they are a closed set: SELF,
+custody classes are the three in Axis C above. They are a closed set: SELF,
 PEER, EXTERNAL.
 
 A party is not independent of a claim when any of the following holds:
@@ -183,7 +183,7 @@ The model separates two claims that are easy to confuse:
 
 An audit that only checks emission conformance can be fooled by a well-formed
 agent that quietly did something else. The operationally-conformant claim is
-where the evidence model earns its keep, and it is the claim an auditor can
+where the evidence model earns its keep. It is the claim an auditor can
 actually act on.
 
 ## Discipline rules (the honest part)
@@ -193,14 +193,14 @@ actually act on.
    than it executed. The validator enforces this by deriving a ceiling from the
    record's own observation and refusing anything above it. The record carries
    `observation.source`, `relationship`, `basis_engines` and
-   `reconciliation.state`, and those facts cap the rung, so a self-report cannot
+   `reconciliation.state` and those facts cap the rung, so a self-report cannot
    be promoted by declaring its own integrity markers. A record cannot carry a
-   grade member at all, and an appraisal cannot conclude above the ceiling its
+   grade member at all. An appraisal cannot conclude above the ceiling its
    subject record supports.
 2. **Closed vocabulary, fail closed.** An unrecognised value is a failure,
    not a new rung. A typo cannot silently raise a record's strength.
 3. **Integrity markers record presence, not mechanism.** The schema says a
-   record is signed, chained, and timestamped; it does not say how. An
+   record is signed, chained and timestamped; it does not say how. An
    auditor can verify a record against the format without knowing the system
    that produced it.
 4. **Derived records carry provenance.** A derived observation must name the
@@ -214,7 +214,7 @@ actually act on.
 ## Relationship to the Agent Action Capsule
 
 This is where we expect the convergence to live. If the Agent Action Capsule
-defines what an agent action is (its structure, lifecycle, and state), the
+defines what an agent action is (its structure, lifecycle and state), the
 evidence record spec defines how the record of that action can be verified
 and graded. The two are complementary: the capsule is the thing being
 evidenced, the evidence record is the audit-grade envelope around it. We are
@@ -238,12 +238,12 @@ evidence-graded envelope without a new format.
 ## Open questions for the WG
 
 1. Does the Agent Action Capsule already define an evidence or verification
-   component we should map onto, or is the envelope separate?
-2. Should the E0-E4 grade be carried inside the capsule envelope, or attached
+   component we should map onto or is the envelope separate?
+2. Should the E0-E4 grade be carried inside the capsule envelope or attached
    as an appraisal result outside it? (Our discipline says the latter, to keep
    producer and verifier roles separate.)
 3. Is the two-axis split (source/relationship, vantage/method) the right
-   granularity, or should either axis collapse into the other?
+   granularity or should either axis collapse into the other?
 4. Which parts of the validator (if any) would the WG want to adopt as a
    shared testbed for the capsule work?
 5. Should the format carry the route an action took? E2 rests on the party that
@@ -255,7 +255,7 @@ evidence-graded envelope without a new format.
 
 ## Suggested next steps
 
-1. Steven shares the Agent Action Capsule docs ahead of the meeting, and we
+1. Steven shares the Agent Action Capsule docs ahead of the meeting and we
    map the two models side by side before the session.
 2. The WG reviews the validator against the capsule structure in a follow-up
    async thread, so the convergence is testable rather than prose-only.

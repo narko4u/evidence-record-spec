@@ -116,6 +116,34 @@ verification scope, and it appears as a field name in one public evidence
 corpus. Neither of those is this. This document defines the grading, not the
 spelling, and the uses are unrelated. Cite the definition rather than a token.
 
+### What makes a party independent
+
+E3 rests on a party that is not the deployment, so the definition of an
+independent party carries the rung. Custody decides it, never count. The
+custody classes are the three in Axis C above and they are a closed set: SELF,
+PEER, EXTERNAL.
+
+A party is not independent of a claim when any of the following holds:
+
+- it is operated, owned or paid by the party whose claim is being graded
+- it shares an enforcement point with that party, so one change bypasses both
+- its statement about the claim is derived from the claim rather than from the
+  effect the claim describes
+- it is the same custody named twice
+
+The consequences are the ones the runnable corpus already enforces:
+
+- agreement between components of one deployment does not reach E3, at any
+  number of components named
+- the deployment's own enforcement point grades as SELF custody, so it can
+  reach E2 and cannot reach E3 on its own account
+- a party that hosts, resells or embeds the deployment without observing the
+  effect for itself is SELF custody for the purpose of the rung
+
+E4 adds an anchor rather than a fourth custody class. Anchoring is a property
+of the receipt, so an E4 receipt carries a grade and an anchor, never a claim
+of an independent custodian.
+
 ### The E0-E4 evidence strength ladder
 
 Axes A and B compose into a grade used to state, in one label, how anchored
@@ -126,7 +154,7 @@ the evidence is:
 | E0 | Declared | agent self-report, no independent verification | none |
 | E1 | Observed | behavior observed by framework/gateway | signed |
 | E2 | Enforced | policy enforced at the boundary, denied actions recorded | signed + chained |
-| E3 | Corroborated | multiple independent sources agree | signed + chained + timestamped |
+| E3 | Corroborated | corroboration by a party that is not the deployment, at PEER or EXTERNAL custody | signed + chained + timestamped |
 | E4 | Anchored | external timestamping, chain-linking, independent verifiability | all of E3 + verifier identifiers |
 
 ### Receipt claims: emission-conformant and operationally-conformant
@@ -164,6 +192,10 @@ actually act on.
 4. **Derived records carry provenance.** A derived observation must name the
    records it was derived from, so a reviewer can separate "the derivation
    is wrong" from "the source signal is wrong."
+5. **Independence is custody, not count.** A grade rests on who could have
+   produced the evidence, never on how many parties agreed. Two components of
+   one deployment are one party, so naming a second engine the deployment
+   controls raises no rung. The disqualifiers are stated under Axis C.
 
 ## Relationship to the Agent Action Capsule
 

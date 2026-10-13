@@ -16,6 +16,11 @@ line falls between adjacent rungs are held outside this repository on purpose,
 so the published set describes what each rung means without publishing the edge
 decisions.
 
+A case that synthesises a record takes a `gf-` id. The numbers are part of the
+published model: gapless from `gf-00001` and one id per record, assigned in the
+order the cases are built, so no two cases can carry the same one. main()
+re-checks both properties before it writes anything.
+
     python3 gen_cases.py
     python3 grade_floor.py grade-floor/cases/
 """
@@ -40,10 +45,10 @@ def with_claim(record: dict, claim: str) -> dict:
     return rec
 
 
-def framework_observed() -> dict:
+def framework_observed(record_id: str) -> dict:
     """A framework observation: the lowest source that is not the actor's own."""
     rec = sample("er-00001-e0-self-report.json")
-    rec["record_id"] = "gf-00004"
+    rec["record_id"] = record_id
     rec["observation"] = {"source": "framework", "relationship": "direct", "directness": "direct_observation"}
     rec["verification"] = {
         "vantage": "artifact",
@@ -56,10 +61,10 @@ def framework_observed() -> dict:
     return rec
 
 
-def boundary_observed() -> dict:
+def boundary_observed(record_id: str) -> dict:
     """A boundary observation of a permitted action: the effect ran through the gate."""
     rec = sample("er-00001-e0-self-report.json")
-    rec["record_id"] = "gf-00005"
+    rec["record_id"] = record_id
     rec["observation"] = {"source": "gateway_proxy", "relationship": "direct", "directness": "direct_observation"}
     rec["verification"] = {
         "vantage": "substrate",
@@ -73,18 +78,20 @@ def boundary_observed() -> dict:
     return rec
 
 
-def contradiction_observed() -> dict:
+def contradiction_observed(record_id: str) -> dict:
     """A boundary record that contradicts the agent, with no outside party.
 
     Still E2: the enforcement point is the deployment's own account, so nothing
     independent has agreed with it. A disagreement is not corroboration either.
     """
     rec = sample("er-00004-e2-contradiction.json")
-    rec["record_id"] = "gf-00006"
+    rec["record_id"] = record_id
     rec["claims"] = []
     return rec
 
 
+# The gf- ids sit next to the case they belong to, so the whole sequence is
+# readable in one place and the numbering is part of the published model.
 def build_cases() -> list[tuple[str, dict, dict]]:
     return [
         ("e0-declared", sample("er-00001-e0-self-report.json"),
@@ -92,17 +99,17 @@ def build_cases() -> list[tuple[str, dict, dict]]:
           "caps": ["no_independent_evidence_caps_at_e0",
                    "e3_requires_an_independent_party",
                    "e4_unreachable_for_this_observation_source"]}),
-        ("e1-observed", framework_observed(),
+        ("e1-observed", framework_observed("gf-00001"),
          {"decision": "accepted", "derived_grade": "E1",
           "caps": ["e3_requires_an_independent_party",
                    "e4_unreachable_for_this_observation_source"]}),
-        ("e2-enforced", boundary_observed(),
+        ("e2-enforced", boundary_observed("gf-00002"),
          {"decision": "accepted", "derived_grade": "E2",
           "caps": ["e3_requires_an_independent_party",
                    "e4_requires_timestamp_chain_link_and_independent_verifier"]}),
-        ("e2-enforced-emission-conformant", with_claim(boundary_observed(), "emission-conformant"),
+        ("e2-enforced-emission-conformant", with_claim(boundary_observed("gf-00003"), "emission-conformant"),
          {"decision": "accepted", "derived_grade": "E2", "reason_contains": "grade_derived"}),
-        ("e2-contradiction-not-corroboration", with_claim(contradiction_observed(), "emission-conformant"),
+        ("e2-contradiction-not-corroboration", with_claim(contradiction_observed("gf-00004"), "emission-conformant"),
          {"decision": "accepted", "derived_grade": "E2",
           "caps": ["e3_requires_an_independent_party"]}),
         ("e3-corroborated", sample("er-00005-e3-derived-reconstructed.json"),
@@ -118,6 +125,14 @@ def build_cases() -> list[tuple[str, dict, dict]]:
 
 def main() -> int:
     cases = build_cases()
+    ids = [record["record_id"] for _case_id, record, _expect in cases]
+    shared = sorted({record_id for record_id in ids if ids.count(record_id) > 1})
+    if shared:
+        raise SystemExit(f"two cases carry the same record_id: {', '.join(shared)}")
+    gf = sorted(record_id for record_id in ids if record_id.startswith("gf-"))
+    gapless = [f"gf-{n:05d}" for n in range(1, len(gf) + 1)]
+    if gf != gapless:
+        raise SystemExit(f"gf- ids must run from gf-00001 with no gaps: {gf} != {gapless}")
     CASES_DIR.mkdir(parents=True, exist_ok=True)
     manifest: dict[str, dict] = {}
     for case_id, record, expect in cases:

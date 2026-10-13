@@ -16,7 +16,7 @@
       {
         "claim": "emission-conformant",
         "evidence": [
-          "gf-00005"
+          "gf-00003"
         ]
       }
     ],
@@ -40,7 +40,7 @@
       "boundary_observation": "",
       "state": "agreement"
     },
-    "record_id": "gf-00005",
+    "record_id": "gf-00003",
     "sampling": {
       "audit_required": true,
       "sampled": false

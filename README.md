@@ -214,7 +214,7 @@ grade.
 |---|---|---|---|
 | Rung | one grade on the ladder | `VERIFIABILITY-OVERVIEW.md` | E2 Enforced |
 | Case | a record that must derive one rung | `grade-floor/cases/<case_id>/` | `e2-enforced` |
-| Record | the record a case carries | `record_id` inside the case | `gf-00005` |
+| Record | the record a case carries | `record_id` inside the case | `gf-00002` |
 | Sample | a worked record or an appraisal of one | `samples/` | `er-00003-e4-operationally-conformant` |
 
 A case id carries a rung prefix so a reader can place it in the ladder. It is not
@@ -231,7 +231,8 @@ rung rather than a claim about the rung.
 The id prefixes are fixed. `er-` ids are records. `ea-` ids are appraisals of a
 record. `nr-` ids are the negative fixtures in `fixtures/negative/`, the records
 a validator must refuse. `gf-` ids are records that exist only inside the shipped
-corpus.
+corpus. They are numbered from `gf-00001` with no gaps, one id per record, so no
+two cases carry the same one.
 
 This repository ships the floor. Cases that probe the boundary between
 adjacent rungs are not published here.

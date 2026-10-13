@@ -18,7 +18,7 @@
       {
         "claim": "emission-conformant",
         "evidence": [
-          "gf-00006"
+          "gf-00004"
         ]
       }
     ],
@@ -42,7 +42,7 @@
       "boundary_observation": "gateway recorded SSH connection to prod host at 03:47",
       "state": "contradiction"
     },
-    "record_id": "gf-00006",
+    "record_id": "gf-00004",
     "sampling": {
       "audit_required": true,
       "sampled": false

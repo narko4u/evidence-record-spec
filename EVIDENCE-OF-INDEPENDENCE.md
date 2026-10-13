@@ -27,7 +27,11 @@ the derivation on three E2 cases and named two shipped cases that contradicted
 the marker column. The disagreement is recorded as open items in the overview
 rather than settled in a thread. A fifth change the same day added a naming table
 to `README.md` so a reader can tell a rung from a case id, a record id, a sample
-id and a claim name without inferring any of the four from its shape.
+id and a claim name without inferring any of the four from its shape. A sixth
+change the same day swept the typography of all six published documents in one
+commit, directed rather than incidental. Every em dash and every comma before a
+conjunction has been removed. The sentences those commas had been holding
+together were split rather than left as run-ons.
 
 The refresh is no longer a matter of trust.
 `.github/scripts/check_pinned_digests.py` recomputes every row below from the
@@ -38,11 +42,11 @@ stale behind a commit again.
 
 | File | SHA-256 |
 |---|---|
-| README.md | `094da133b3905d3b199869fb1faaf932d389def844b23e947da9d4a3e5f75ea3` |
-| CROSSWALK.md | `5d85b8b9288751fa1e9fa0323ebcc3cbb49924f0ac984f62156b1f4c0e98bbaf` |
-| VERIFIABILITY-OVERVIEW.md | `7ee645198c560341edb168ad472406c151eff07d4ac1db5636a02c07c7916e65` |
+| README.md | `6d572306c79aae884256cdd399b07a8b86eff3e0e1c7e177df25fa0c82b064dc` |
+| CROSSWALK.md | `34b3e04e176da0983de038459a6670a7b70ae1298047a874c7d46723e1e083f8` |
+| VERIFIABILITY-OVERVIEW.md | `ee89f88d4162b1731bb20aeb1d54f4c14cbc52d6374b89a4d21c29578adc1abc` |
 | IMPLEMENTATIONS.md | `9826bb58becc79e85bc94305c2f655ab28e0e69d4450bfbeb060962e0a46c4c5` |
-| AAIF-SUBMISSION-DRAFT.md | `ff84a37b12bc108aa315270c35dcfa01125a160f4eee0f2ad83dcb7af3d33c00` |
+| AAIF-SUBMISSION-DRAFT.md | `2e7ecdea02d59ded0d7667c4011ddce2f41075b741f2b49bdcfb0baaf1b57899` |
 | NOTICE | `7070e13284e6402e0dd409cce60b2115b0a51ef50994772e08031e18521494ec` |
 | LICENSE | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` |
 | CITATION.cff | `6e4b1ea7e1a9043ac33749990dbbbaecae6cc664b9ceb06936c19937a7b1e59b` |
@@ -78,7 +82,7 @@ comparison for the schema.
 | validate_evidence.py vs write_verification_basis.py | 0.051 | 65 chars | standard imports: argparse/json/sys/pathlib |
 | evidence-record-0.1.schema.json vs ave-record-1.1.0.schema.json | 0.026 | 81 chars | `$schema`/`$id` header common to all JSON Schemas |
 
-Interpretation: no copied logic, structure, docstrings, comments, or field
+Interpretation: no copied logic, structure, docstrings, comments or field
 layout. Remaining similarity is boilerplate (imports, schema header).
 
 ## 3. Shared vocabulary (concepts, not expression)
@@ -86,7 +90,7 @@ layout. Remaining similarity is boilerplate (imports, schema header).
 The schema uses field names (vantage, method, basis, substrate, observation
 source/relationship) that are common terminology in the agent observability
 and evidence space. They appear in AAIF WG documents, adjacent record
-projects, and our own issue contributions. Vocabulary is not copyrightable
+projects and our own issue contributions. Vocabulary is not copyrightable
 expression; the arrangement and code are original to this project. See
 README "Independent implementation notice".
 

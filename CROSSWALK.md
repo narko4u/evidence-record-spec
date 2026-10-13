@@ -87,7 +87,7 @@ The pairing is the point.
 ## Report the mapping you derive
 
 This page carries no mapping table. A mapping between two schemes is a claim
-about both of them and it should be checkable by whoever reads it rather than
+about both of them. It should be checkable by whoever reads it rather than
 asserted by whichever project writes it down. Derive your own and report it:
 
 - your scheme, with a link to the definitions you publish

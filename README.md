@@ -2,7 +2,7 @@
 
 A portable, evidence-grade record format for agent actions. The schema and
 validator describe **what an evidence record must contain** so an auditor can
-separate what was claimed from what was observed, at what vantage, and with
+separate what was claimed from what was observed, at what vantage and with
 what assurance.
 
 This is a public specification. It is deliberately independent of any
@@ -18,7 +18,7 @@ evidence for audit and dispute resolution)** names the gap this addresses:
 > format that preserves integrity guarantees end to end."
 
 This spec is a proposed answer to that gap: a public data model that anyone
-can test, attack, and build against.
+can test, attack and build against.
 
 ## The model
 
@@ -28,7 +28,7 @@ Every record carries four things that matter to an auditor:
    - `source`: agent self-report, framework, gateway/proxy, identity provider,
      sandbox, OS, network sensor, security sensor, external authority
      (the AAIF "source and trust" distinction)
-   - `relationship`: direct, corroborating, contradictory, or derived
+   - `relationship`: direct, corroborating, contradictory or derived
    - `directness`: direct observation vs inferred
 
 2. **Verification** : how strong the evidence is
@@ -50,22 +50,22 @@ Every record carries four things that matter to an auditor:
    - `claims`: `emission-conformant` (the agent emitted the telemetry the
      policy expects) or `operationally-conformant` (the agent actually
      performed the permitted actions, verified by observation)
-   - `reconciliation`: agreement, contradiction, or the explicit absence of
+   - `reconciliation`: agreement, contradiction or the explicit absence of
      independent evidence (three states, not two)
 
 ## witness_scope (vocabulary)
 
 A separate vocabulary answers the custody question: who is able to produce a
 record at all. Scope is graded SELF (the deployment's own account), PEER (a
-counterparty in the same agreement), or EXTERNAL (a party outside the trust
-domain). It names custody, not forgeability, and it is deliberately not a
+counterparty in the same agreement) or EXTERNAL (a party outside the trust
+domain). It names custody, not forgeability. It is deliberately not a
 strength value: collapsing it into a summary figure would let a SELF-scope
 deployment read as externally witnessed.
 
 The scope name travels alongside the observation and verification axes but is
 not one of them, because it describes custody rather than record content.
 
-Definitions, assignment rule, and the public provenance of the grading:
+Definitions, assignment rule and the public provenance of the grading:
 [`VERIFIABILITY-OVERVIEW.md`](VERIFIABILITY-OVERVIEW.md#axis-c-witness_scope).
 
 ## Sample records
@@ -117,7 +117,7 @@ a specific record version, never to a floating claim.
 ## Content addresses (CPB registry contexts)
 
 Each record/appraisal has a derived identifier: SHA-256 over the JCS (RFC 8785)
-canonical form of the **full** record (no exclusion set — the field set is the
+canonical form of the **full** record (no exclusion set, the field set is the
 closed schema member list; records are schema-validated before digesting, so an
 unrecognised member or enum value is rejected, never digested). Pinned
 conformance vectors for both artifact types live in
@@ -152,10 +152,10 @@ The validator checks two layers:
    - `derived` observations must carry `provenance`
    - the grade is **derived** from `observation.source`, `relationship`,
      `reconciliation.state`, `verification.basis_engines` and the `integrity`
-     markers, and capped by them. A record cannot reach a rung its own
+     markers and capped by them. A record cannot reach a rung its own
      observation cannot support, whatever it declares about itself: a
-     self-report is E0, a framework observation is E1, and a boundary or
-     external observation reaches higher only with corroboration, and for E4
+     self-report is E0. A framework observation is E1. A boundary or
+     external observation reaches higher only with corroboration and, for E4,
      only with chain-linking, timestamping and a verifier independent of the
      agent. `verification.vantage` is **not** an input to the ceiling: it is
      the first half of the `basis` composition checked above
@@ -172,8 +172,8 @@ On the appraisal side the citation is a binding, not a label:
      pins and never over a different one
    - `claim_type` must name a receipt claim the subject makes, wherever the
      subject makes any. An appraisal may appraise a claim the subject does not
-     yet assert — that is how a low grade is recorded honestly
-     (`samples/ea-00002`) — but it may not attribute a claim the subject never
+     yet assert, which is how a low grade is recorded honestly
+     (`samples/ea-00002`), but it may not attribute a claim the subject never
      made
    - the concluded grade cannot exceed the ceiling derived from its subject
      record
@@ -184,7 +184,7 @@ the producer's claim in the record layer.
 
 ## Grade floor (runnable, no install)
 
-The rungs are the ladder. The floor is what each rung requires, and it is
+The rungs are the ladder. The floor is what each rung requires. It is
 runnable as shipped:
 
 ```bash
@@ -272,27 +272,27 @@ route. The maintainers do not write a third party's implementation for them.
 
 **This repo describes the record format only.** It does not describe:
 
-- how records are signed, chained, or timestamped (only whether the record
+- how records are signed, chained or timestamped (only whether the record
   carries those markers)
-- how observations are collected, correlated, or derived
+- how observations are collected, correlated or derived
 - how policies are enforced
 - any specific product implementation
 
 The integrity markers (`signed`, `chain_linked`, `timestamped`) record
 presence, not mechanism. An auditor can verify a record against this format
-without any knowledge of the system that produced it, and a producer can
+without any knowledge of the system that produced it. A producer can
 implement the format without adopting any particular stack.
 
 **This repository is also not a service.** It is the specification and
-validation layer: it defines what a conforming record contains, and checks
+validation layer: it defines what a conforming record contains and checks
 whether a given artifact conforms to that format. It does not anchor, attest,
 notarise or hold custody of any record. Validating a record here produces no
 anchor and involves no party independent of whoever runs the validator.
 Anchoring, replay protection and custody of records are operations carried out
-outside the format, and are out of scope here.
+outside the format and are out of scope here.
 
 A record that validates is a statement about the record's own content. It is
-not a warranty about the system that produced it, and it is not evidence that
+not a warranty about the system that produced it. It is not evidence that
 the operation the record describes actually happened.
 
 ## Independent implementation notice
@@ -302,9 +302,9 @@ AAIF standards discussions and adjacent projects in the agent observability
 and evidence space (vantage, method, basis, substrate, observation source
 and relationship), which are common terminology in the agent observability
 and evidence space and appear across multiple projects
-and working group documents. No code, schema structure, documentation, or
+and working group documents. No code, schema structure, documentation or
 sample records in this repository are copied from any other project. The
-signing, chain-linking, and timestamping mechanisms that would produce these
+signing, chain-linking and timestamping mechanisms that would produce these
 records are out of scope for this repository entirely.
 
 ---

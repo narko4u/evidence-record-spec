@@ -11,8 +11,8 @@ telemetry as an evidence source), agent record family
 The E4 use case names a gap: no standard for tamper-evident agent evidence,
 no evidence-grade trace interchange format. Rather than write another
 analysis document, this proposal is a testable artifact: a JSON Schema for an
-evidence record, sample records, and a strict validator. The WG can run the
-validator, attack the schema, and build against the format the same way it
+evidence record, sample records and a strict validator. The WG can run the
+validator, attack the schema and build against the format the same way it
 has been testing record family formats.
 
 ## What the format encodes
@@ -29,7 +29,7 @@ WG has already been converging on:
 3. **Grade** : the E0-E4 ladder from the E4 use case (Declared, Observed,
    Enforced, Corroborated, Anchored), with grade-to-integrity requirements.
 4. **Claims and reconciliation** : emission-conformant and
-   operationally-conformant claims, and the three-state reconciliation
+   operationally-conformant claims and the three-state reconciliation
    (agreement, contradiction, no independent evidence).
 
 ## Why test it here

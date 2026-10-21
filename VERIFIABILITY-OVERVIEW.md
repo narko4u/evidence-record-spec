@@ -130,6 +130,9 @@ A party is not independent of a claim when any of the following holds:
 - its statement about the claim is derived from the claim rather than from the
   effect the claim describes
 - it is the same custody named twice
+- it is named as a PEER or EXTERNAL engine while the record carries no
+  reference to that party's own record, so the name is the deployment's claim
+  about who was watching rather than that party's account
 
 The consequences are the ones the runnable corpus already enforces:
 
@@ -139,6 +142,10 @@ The consequences are the ones the runnable corpus already enforces:
   reach E2 and cannot reach E3 on its own account
 - a party that hosts, resells or embeds the deployment without observing the
   effect for itself is SELF custody for the purpose of the rung
+- a PEER or EXTERNAL engine contributes nothing to the rung unless
+  `provenance` names at least one record other than this one. Without a
+  reference there is no account to be corroborated, only a label, so the
+  record caps at E2 and reports `uncorroborated_party_claim`.
 
 E4 adds an anchor rather than a fourth custody class. Anchoring is a property
 of the receipt, so an E4 receipt carries a grade and an anchor, never a claim
@@ -154,7 +161,7 @@ the evidence is:
 | E0 | Declared | agent self-report, no independent verification | `observation.source` is the agent's own account |
 | E1 | Observed | the action observed outside the acting agent | a source outside the agent, with gaps still possible |
 | E2 | Enforced | a boundary component of the deployment recorded the action | `observation.source` names a boundary component of the deployment |
-| E3 | Corroborated | corroboration by a party that is not the deployment, at PEER or EXTERNAL custody | an engine in Axis C custody, at PEER or EXTERNAL |
+| E3 | Corroborated | corroboration by a party that is not the deployment, at PEER or EXTERNAL custody | an engine in Axis C custody at PEER or EXTERNAL, plus a `provenance` reference to that party's own record |
 | E4 | Anchored | external timestamping, chain-linking, independent verifiability | E3 custody, plus `timestamped`, `chain_linked` and a verifier other than the agent |
 
 **Integrity markers do not cap a rung from E0 to E3.** They record presence,

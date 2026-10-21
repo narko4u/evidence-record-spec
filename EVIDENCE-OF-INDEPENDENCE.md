@@ -11,7 +11,7 @@ It is not a substitute for legal advice; it is the raw material a lawyer
 would use.
 
 The table below is a point-in-time snapshot and is refreshed on revision. It was
-last refreshed 2026-10-13, on seven changes. The PEER custody revision gave the
+last refreshed 2026-10-21, on eight changes. The PEER custody revision gave the
 rule that a record reaches E3 on corroboration by a party other than the
 deployment a named engine for the peer class (`counterparty_gateway`), which the
 rule set grades as PEER under Axis C. It added one sample
@@ -38,20 +38,31 @@ adds a claim is built by copying the record it derives from rather than by
 issuing an id of its own. The published sequence had also opened at `gf-00004`.
 `gen_cases.py` now takes the id where the case is declared and refuses to write
 when two cases share an id or when the sequence has a gap, so neither fault can
-reach a commit unannounced.
+reach a commit unannounced. An eighth change, on 2026-10-21, closed the last
+hole in the custody rule. A record could name a PEER engine
+(`counterparty_gateway`) in `basis_engines`, leave `provenance` empty and still
+derive E3, then E4 once the anchoring markers were set, because custody was read
+from the engine name and the name is written by the producer. A reported corpus
+run at two published commits produced exactly those two records. The rule now
+reads independence as custody plus a reference: a PEER or EXTERNAL engine counts
+only when `provenance` names a record other than this one, so the label alone
+caps at E2 under the gate `uncorroborated_party_claim`. Two negative fixtures
+hold the line, `nr-08` and `nr-09`, the second being the same record with every
+anchoring marker set. Every shipped sample and every floor case keeps the rung it
+published, so the change is discriminating rather than a general tightening.
 
 The refresh is no longer a matter of trust.
 `.github/scripts/check_pinned_digests.py` recomputes every row below from the
 shipped bytes and fails CI when a covered file changes, so the record cannot go
 stale behind a commit again.
 
-## 1. Files covered (SHA-256, as of 2026-10-13)
+## 1. Files covered (SHA-256, as of 2026-10-21)
 
 | File | SHA-256 |
 |---|---|
 | README.md | `d441c7929fef5f7f8c27f00ca943a76a4ff340fbbf14df818cad5e96d7c6f45e` |
 | CROSSWALK.md | `34b3e04e176da0983de038459a6670a7b70ae1298047a874c7d46723e1e083f8` |
-| VERIFIABILITY-OVERVIEW.md | `ee89f88d4162b1731bb20aeb1d54f4c14cbc52d6374b89a4d21c29578adc1abc` |
+| VERIFIABILITY-OVERVIEW.md | `6a32a2ea648d926b0ae017e5bd0b75f803c406af988cbaa166dccbcb531149c4` |
 | IMPLEMENTATIONS.md | `9826bb58becc79e85bc94305c2f655ab28e0e69d4450bfbeb060962e0a46c4c5` |
 | AAIF-SUBMISSION-DRAFT.md | `2e7ecdea02d59ded0d7667c4011ddce2f41075b741f2b49bdcfb0baaf1b57899` |
 | NOTICE | `7070e13284e6402e0dd409cce60b2115b0a51ef50994772e08031e18521494ec` |
@@ -60,8 +71,8 @@ stale behind a commit again.
 | evidence-record-0.1.schema.json | `63051fa3d8000768d61a96877edb2fdcbf53a16b3e1a13c6220400ad54fe04a1` |
 | evidence-appraisal-0.1.schema.json | `9b2fa634b100c4a5c3e54b896fea7fcd60a04937088cdfdc8fae442b442977ca` |
 | validate_evidence.py | `b82dfb43177b22bf1f42f52efa829b3bab258c8456ce1537d392c03cf10bd03a` |
-| evidence_grade_rules.py | `c88250e2ddf2e68569fafa5c13123613be289810a9ef50732b72be50a0f4d4d2` |
-| grade_floor.py | `c9bbefbc18892af3e523739e999250cc5095879432fe1a9475acc9c0fe64e4f0` |
+| evidence_grade_rules.py | `d77d8552fb25a4b5719aa0785a3db9ca30123bc2ee3a7c667ff09c0884501567` |
+| grade_floor.py | `6883a0315229121e288d8f75a5ae8ee3bf535d184a2b2ecaeac61042c9d05a73` |
 | gen_cases.py | `d29b38f25d2f738bd77eca8023b36aecc6650c6dadcbaa695be68b7256282a32` |
 | samples/ea-00001-e4-agreement.json | `0f7a33126e93459146c008d7b01e4d847b8756382d2f9cd2277a261db2e2004c` |
 | samples/ea-00002-e0-no-independent-evidence.json | `03b5e3ef06ff73fe2d56bc2193476596694525332133cd11703cb8bf7db37473` |

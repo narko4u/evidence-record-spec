@@ -24,6 +24,12 @@ Axis C of the overview answers. A record is always the deployment's own
 account of itself, so counting engine names is not enough: two engines from the
 same deployment are one party agreeing with itself. Independence is decided by
 the custody class of the engine, never by how many engines are listed.
+
+A custody class is still the producer's assertion until it points at something
+the other party produced. Naming a PEER or EXTERNAL engine costs one string and
+proves nothing, so a record that names one without a provenance reference to
+that party's own record caps at E2. That is the same discipline as every other
+gate here: a declared value never raises a grade.
 """
 from __future__ import annotations
 
@@ -92,6 +98,7 @@ INDEPENDENT_SCOPES = {"PEER", "EXTERNAL"}
 GATE_UNKNOWN_SOURCE = "unknown_source"
 GATE_NO_INDEPENDENT_EVIDENCE = "no_independent_evidence"
 GATE_NO_INDEPENDENT_PARTY = "no_independent_party"
+GATE_UNCORROBORATED_PARTY = "uncorroborated_party_claim"
 GATE_NOT_ANCHORABLE = "not_anchorable"
 GATE_SOURCE_NOT_ANCHORABLE = "source_not_anchorable"
 
@@ -100,6 +107,7 @@ GATE_CEILING = {
     GATE_UNKNOWN_SOURCE: "E0",
     GATE_NO_INDEPENDENT_EVIDENCE: "E0",
     GATE_NO_INDEPENDENT_PARTY: "E2",
+    GATE_UNCORROBORATED_PARTY: "E2",
     GATE_NOT_ANCHORABLE: "E3",
     GATE_SOURCE_NOT_ANCHORABLE: "E3",
 }
@@ -124,6 +132,18 @@ def independent_engines(record: dict) -> list[str]:
     return sorted({e for e in engines if engine_scope(e) in INDEPENDENT_SCOPES})
 
 
+def counterparty_references(record: dict) -> list[str]:
+    """Record ids this record says it was derived from, other than itself.
+
+    ``provenance`` is the only field in the format that can point at another
+    party's record. An id that equals this record's own id points at nothing
+    new, so it does not count.
+    """
+    own = str(record.get("record_id") or "")
+    refs = [p for p in (record.get("provenance") or []) if isinstance(p, str) and p.strip()]
+    return sorted({p for p in refs if p != own})
+
+
 def grade_gates(record: dict) -> list[str]:
     """The gates that actually bite, in the order they are applied.
 
@@ -144,8 +164,13 @@ def grade_gates(record: dict) -> list[str]:
         gates.append(GATE_NO_INDEPENDENT_EVIDENCE)
 
     # E3 requires an independent party, decided by custody and not by count.
+    # A PEER or EXTERNAL custody class is the producer's own assertion until
+    # the record points at that party's record, so a named peer with nothing
+    # behind it caps at E2 as well.
     if not independent_engines(record):
         gates.append(GATE_NO_INDEPENDENT_PARTY)
+    elif not counterparty_references(record):
+        gates.append(GATE_UNCORROBORATED_PARTY)
 
     # E4 requires an anchorable origin plus every anchoring marker present.
     verifiable_by = [v for v in (integrity.get("verifiable_by") or []) if isinstance(v, str)]

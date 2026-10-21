@@ -32,6 +32,7 @@ from evidence_grade_rules import (
     GATE_NO_INDEPENDENT_PARTY,
     GATE_NOT_ANCHORABLE,
     GATE_SOURCE_NOT_ANCHORABLE,
+    GATE_UNCORROBORATED_PARTY,
     GATE_UNKNOWN_SOURCE,
     GRADE_ORDER,
     derive_grade_ceiling,
@@ -42,6 +43,9 @@ REASON_DERIVED = "grade_derived"
 REASON_UNKNOWN_SOURCE = "unknown_observation_source"
 REASON_NO_INDEPENDENT_EVIDENCE = "no_independent_evidence_caps_at_e0"
 REASON_NO_INDEPENDENT_PARTY = "e3_requires_an_independent_party"
+REASON_UNCORROBORATED_PARTY = (
+    "peer_or_external_engine_without_a_reference_to_that_partys_record"
+)
 REASON_NO_ANCHOR = "e4_requires_timestamp_chain_link_and_independent_verifier"
 REASON_SOURCE_NOT_ANCHORABLE = "e4_unreachable_for_this_observation_source"
 REASON_UNKNOWN_CLAIM = "unknown_claim"
@@ -52,6 +56,7 @@ GATE_REASON = {
     GATE_UNKNOWN_SOURCE: REASON_UNKNOWN_SOURCE,
     GATE_NO_INDEPENDENT_EVIDENCE: REASON_NO_INDEPENDENT_EVIDENCE,
     GATE_NO_INDEPENDENT_PARTY: REASON_NO_INDEPENDENT_PARTY,
+    GATE_UNCORROBORATED_PARTY: REASON_UNCORROBORATED_PARTY,
     GATE_NOT_ANCHORABLE: REASON_NO_ANCHOR,
     GATE_SOURCE_NOT_ANCHORABLE: REASON_SOURCE_NOT_ANCHORABLE,
 }

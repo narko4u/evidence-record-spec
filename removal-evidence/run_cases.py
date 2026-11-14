@@ -16,7 +16,9 @@ from __future__ import annotations
 
 import json
 import pathlib
+import subprocess
 import sys
+import tempfile
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -30,6 +32,46 @@ ANCHOR = HERE / "anchor.json"
 def run(name: str, anchor: dict | None) -> dict:
     entries = v.load_log(CASES / name / "log.jsonl")
     return v.verify(entries, anchor)
+
+
+def cli(args: list[str]) -> tuple[int, str]:
+    proc = subprocess.run(
+        [sys.executable, str(HERE / "verify.py"), *args],
+        capture_output=True,
+        text=True,
+    )
+    return proc.returncode, proc.stdout + proc.stderr
+
+
+def guards() -> int:
+    """Failures a reader must never get away with: a witness run that silently
+    skips the witness, and a crash where a verdict is promised."""
+    failures = 0
+    rows = []
+    with tempfile.TemporaryDirectory() as td:
+        tmp = pathlib.Path(td)
+
+        null_anchor = tmp / "null-anchor.json"
+        null_anchor.write_text("null", encoding="utf-8")
+        rc, out = cli([str(CASES / "resealed_pair"), "--anchor", str(null_anchor)])
+        rows.append(("null anchor rejects", rc == 1 and "E_ANCHOR_UNUSABLE" in out))
+
+        bad_log = tmp / "bad-log"
+        bad_log.mkdir()
+        (bad_log / "log.jsonl").write_text('{"seq":1,"id":"ev-0001","kind":"action"\n', encoding="utf-8")
+        rc, out = cli([str(bad_log)])
+        rows.append(("malformed log gives a verdict", rc == 1 and "E_LOG_UNREADABLE" in out and "Traceback" not in out))
+
+        missing_anchor = tmp / "absent.json"
+        rc, out = cli([str(CASES / "resealed_pair"), "--anchor", str(missing_anchor)])
+        rows.append(("missing anchor file rejects", rc == 1 and "E_ANCHOR_UNREADABLE" in out))
+
+    print("-" * 58)
+    for name, ok in rows:
+        if not ok:
+            failures += 1
+        print(f"guard {name:34} {'ok' if ok else 'FAILED'}")
+    return failures
 
 
 def main() -> int:
@@ -57,6 +99,7 @@ def main() -> int:
 
     print("-" * 58)
     print(f"{len(expected)} cases, {failures} mismatched")
+    failures += guards()
     return 1 if failures else 0
 
 

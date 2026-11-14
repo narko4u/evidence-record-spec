@@ -153,10 +153,29 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"verdict": "FAIL", "codes": ["E_NO_LOG"], "detail": [f"{log_path} not found"]}))
         return 1
 
-    entries = load_log(log_path)
+    try:
+        entries = load_log(log_path)
+    except (ValueError, OSError) as exc:
+        print(json.dumps({"verdict": "FAIL", "codes": ["E_LOG_UNREADABLE"], "detail": [str(exc)]}))
+        return 1
+
     anchor = None
     if args.anchor is not None:
-        anchor = json.loads(args.anchor.read_text(encoding="utf-8"))
+        try:
+            anchor = json.loads(args.anchor.read_text(encoding="utf-8"))
+        except (ValueError, OSError) as exc:
+            print(json.dumps({"verdict": "FAIL", "codes": ["E_ANCHOR_UNREADABLE"], "detail": [f"{args.anchor}: {exc}"]}))
+            return 1
+        # An anchor the reader asked for must never degrade into local-only
+        # checks: a null or shapeless anchor would silently skip the witness.
+        if not isinstance(anchor, dict) or "head" not in anchor:
+            print(json.dumps({
+                "verdict": "FAIL",
+                "codes": ["E_ANCHOR_UNUSABLE"],
+                "detail": ["--anchor must be an object carrying a head digest; "
+                           "an unreadable anchor is a failure, not a fallback to local checks"],
+            }))
+            return 1
 
     result = verify(entries, anchor)
     if args.quiet:

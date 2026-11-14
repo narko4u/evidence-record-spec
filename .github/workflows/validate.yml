@@ -39,6 +39,12 @@ jobs:
           git diff --exit-code -- grade-floor
       - name: Grade floor corpus appraises as published
         run: python3 grade_floor.py grade-floor/cases/
+      - name: Removal-evidence corpus regenerates byte for byte
+        run: |
+          python3 removal-evidence/gen_cases.py
+          git diff --exit-code -- removal-evidence/cases removal-evidence/anchor.json
+      - name: Removal-evidence cases hold their published verdicts
+        run: python3 removal-evidence/run_cases.py
       - name: Check that linked repositories are public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

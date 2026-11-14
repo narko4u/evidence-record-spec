@@ -205,6 +205,22 @@ A refusal names the rule that refused it, for example
 `unknown_observation_source`. Both entry points are standard library only: no
 install step, no network call, no account and no service.
 
+## Removal evidence (runnable, no install)
+
+`removal-evidence/` answers a narrower question than the ladder: if a sealed
+record is deleted, would anyone be able to tell?
+
+Five sealed entries, one removal record, one published head digest, five cases,
+each run twice. With the log alone, four cases fail and one passes that should
+not: a record and the removal record that documented its deletion, dropped
+together, renumbered and re-digested, is indistinguishable from a log where the
+record never existed. Against the witness, that case fails too.
+
+```bash
+python3 removal-evidence/run_cases.py
+python3 removal-evidence/verify.py removal-evidence/cases/resealed_pair --anchor removal-evidence/anchor.json
+```
+
 ### What the names are
 
 Four kinds of name appear in this repository and only the first one names a

@@ -39,6 +39,12 @@ and once against `anchor.json`.
 | `resealed_pair` | **PASS** | **FAIL** | a record and its removal record dropped together, the log renumbered, every digest recomputed |
 | `removal_inconsistent` | FAIL | FAIL | a removal note kept beside the record it claims to have removed |
 
+Three guard checks run alongside the cases, because a verifier that fails open is
+worse than no verifier. A null anchor, a missing anchor file, and a malformed log
+must each produce a `FAIL` verdict with its own code (`E_ANCHOR_UNUSABLE`,
+`E_ANCHOR_UNREADABLE`, `E_LOG_UNREADABLE`). None of them may fall back to
+local-only checks or answer with a traceback.
+
 The fourth row is the point of the vector. A custodian who deletes a record and
 the note that recorded the deletion, then rebuilds the chain, produces a log that
 passes every local check. It is indistinguishable from a log where the record

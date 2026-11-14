@@ -1,0 +1,36 @@
+{
+ "intact": {
+  "local": "PASS",
+  "anchored": "PASS",
+  "codes": []
+ },
+ "edited_payload": {
+  "local": "FAIL",
+  "anchored": "FAIL",
+  "codes": [
+   "E_DIGEST"
+  ]
+ },
+ "deleted_no_removal": {
+  "local": "FAIL",
+  "anchored": "FAIL",
+  "codes": [
+   "E_SEQ_GAP"
+  ]
+ },
+ "resealed_pair": {
+  "local": "PASS",
+  "anchored": "FAIL",
+  "codes": [
+   "W_NO_WITNESS",
+   "E_ANCHOR_MISMATCH"
+  ]
+ },
+ "removal_inconsistent": {
+  "local": "FAIL",
+  "anchored": "FAIL",
+  "codes": [
+   "E_REMOVAL_INCONSISTENT"
+  ]
+ }
+}
